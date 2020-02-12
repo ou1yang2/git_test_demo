@@ -1,0 +1,20 @@
+{
+  "core.filemode": [
+    "true"
+  ], 
+  "core.repositoryformatversion": [
+    "0"
+  ], 
+  "remote.origin.url": [
+    "gerrit-mirror:novatek_tv/manifest"
+  ], 
+  "branch.default.merge": [
+    "refs/heads/mitvos"
+  ], 
+  "branch.default.remote": [
+    "origin"
+  ], 
+  "remote.origin.fetch": [
+    "+refs/heads/*:refs/remotes/origin/*"
+  ]
+}

@@ -1,0 +1,702 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+
+  <remote  name="mitvos"
+           fetch="gerrit-mirror:"
+           review="gerrit-mirror.mitvos.com" />
+  <default revision="refs/tags/android-9.0.0_r3"
+           remote="mitvos"
+           sync-c="true"
+           sync-j="4" />
+
+  <project path="build/make" name="novatek_tv/android_p/platform/build" groups="pdk" >
+    <copyfile src="core/root.mk" dest="Makefile" />
+    <linkfile src="CleanSpec.mk" dest="build/CleanSpec.mk" />
+    <linkfile src="buildspec.mk.default" dest="build/buildspec.mk.default" />
+    <linkfile src="core" dest="build/core" />
+    <linkfile src="envsetup.sh" dest="build/envsetup.sh" />
+    <linkfile src="target" dest="build/target" />
+    <linkfile src="tools" dest="build/tools" />
+  </project>
+  <project path="build/blueprint" name="novatek_tv/android_p/platform/build/blueprint" groups="pdk,tradefed" />
+  <project path="build/kati" name="novatek_tv/android_p/platform/build/kati" groups="pdk,tradefed" />
+  <project path="build/soong" name="novatek_tv/android_p/platform/build/soong" groups="pdk,tradefed" >
+    <linkfile src="root.bp" dest="Android.bp" />
+    <linkfile src="bootstrap.bash" dest="bootstrap.bash" />
+  </project>
+  <project path="art" name="novatek_tv/android_p/platform/art" groups="pdk" />
+  <project path="bionic" name="novatek_tv/android_p/platform/bionic" groups="pdk" />
+  <project path="bootable/recovery" name="novatek_tv/android_p/platform/bootable/recovery" groups="pdk" />
+  <project path="compatibility/cdd" name="novatek_tv/android_p/platform/compatibility/cdd" groups="pdk" />
+  <project path="cts" name="novatek_tv/android_p/platform/cts" groups="cts,pdk-cw-fs,pdk-fs" />
+  <project path="dalvik" name="novatek_tv/android_p/platform/dalvik" groups="pdk-cw-fs,pdk-fs" />
+  <project path="developers/build" name="novatek_tv/android_p/platform/developers/build" groups="developers" />
+  <project path="developers/demos" name="novatek_tv/android_p/platform/developers/demos" groups="developers" />
+  <project path="developers/samples/android" name="novatek_tv/android_p/platform/developers/samples/android" groups="developers" />
+  <project path="development" name="novatek_tv/android_p/platform/development" groups="developers,pdk-cw-fs,pdk-fs" />
+  <project path="device/common" name="novatek_tv/android_p/device/common" groups="pdk-cw-fs,pdk" />
+  <project path="device/generic/arm64" name="novatek_tv/android_p/device/generic/arm64" groups="pdk" />
+  <project path="device/generic/armv7-a-neon" name="novatek_tv/android_p/device/generic/armv7-a-neon" groups="pdk" />
+  <project path="device/generic/car" name="novatek_tv/android_p/device/generic/car" groups="pdk" />
+  <project path="device/generic/common" name="novatek_tv/android_p/device/generic/common" groups="pdk" />
+  <project path="device/generic/goldfish" name="novatek_tv/android_p/device/generic/goldfish" groups="pdk" />
+  <project path="device/generic/goldfish-opengl" name="novatek_tv/android_p/device/generic/goldfish-opengl" groups="pdk" />
+  <project path="device/generic/mips" name="novatek_tv/android_p/device/generic/mips" groups="pdk" />
+  <project path="device/generic/mips64" name="novatek_tv/android_p/device/generic/mips64" groups="pdk" />
+  <project path="device/generic/mini-emulator-arm64" name="novatek_tv/android_p/device/generic/mini-emulator-arm64" groups="pdk" />
+  <project path="device/generic/mini-emulator-armv7-a-neon" name="novatek_tv/android_p/device/generic/mini-emulator-armv7-a-neon" groups="pdk" />
+  <project path="device/generic/mini-emulator-mips" name="novatek_tv/android_p/device/generic/mini-emulator-mips" groups="pdk" />
+  <project path="device/generic/mini-emulator-mips64" name="novatek_tv/android_p/device/generic/mini-emulator-mips64" groups="pdk" />
+  <project path="device/generic/mini-emulator-x86" name="novatek_tv/android_p/device/generic/mini-emulator-x86" groups="pdk" />
+  <project path="device/generic/mini-emulator-x86_64" name="novatek_tv/android_p/device/generic/mini-emulator-x86_64" groups="pdk" />
+  <project path="device/generic/qemu" name="novatek_tv/android_p/device/generic/qemu" groups="pdk" />
+  <project path="device/generic/uml" name="novatek_tv/android_p/device/generic/uml" groups="device,pdk" />
+  <project path="device/generic/x86" name="novatek_tv/android_p/device/generic/x86" groups="pdk" />
+  <project path="device/generic/x86_64" name="novatek_tv/android_p/device/generic/x86_64" groups="pdk" />
+  <project path="device/google/accessory/arduino" name="novatek_tv/android_p/device/google/accessory/arduino" groups="device,pdk" />
+  <project path="device/google/accessory/demokit" name="novatek_tv/android_p/device/google/accessory/demokit" groups="device,pdk" />
+  <project path="device/google/atv" name="novatek_tv/android_p/device/google/atv" groups="device,broadcom_pdk,generic_fs,pdk" />
+  <project path="device/google/contexthub" name="novatek_tv/android_p/device/google/contexthub" groups="device,marlin,pdk" />
+  <project path="device/google/cuttlefish" name="novatek_tv/android_p/device/google/cuttlefish" groups="device" />
+  <project path="device/google/cuttlefish_common" name="novatek_tv/android_p/device/google/cuttlefish_common" groups="device" />
+  <project path="device/google/cuttlefish_kernel" name="novatek_tv/android_p/device/google/cuttlefish_kernel" groups="device" clone-depth="1" />
+  <project path="device/google/marlin" name="novatek_tv/android_p/device/google/marlin" groups="device,marlin,pdk" />
+  <project path="device/google/marlin-kernel" name="novatek_tv/android_p/device/google/marlin-kernel" groups="device,marlin,pdk" clone-depth="1" />
+  <project path="device/google/muskie" name="novatek_tv/android_p/device/google/muskie" groups="device,muskie,pdk" />
+  <project path="device/google/taimen" name="novatek_tv/android_p/device/google/taimen" groups="device,taimen,pdk" />
+  <project path="device/google/vrservices" name="novatek_tv/android_p/device/google/vrservices" groups="pdk" clone-depth="1" />
+  <project path="device/google/wahoo" name="novatek_tv/android_p/device/google/wahoo" groups="device,wahoo,pdk" />
+  <project path="device/google/wahoo-kernel" name="novatek_tv/android_p/device/google/wahoo-kernel" groups="device,wahoo,pdk" clone-depth="1" />
+  <project path="device/linaro/bootloader/arm-trusted-firmware" name="novatek_tv/android_p/device/linaro/bootloader/arm-trusted-firmware" />
+  <project path="device/linaro/bootloader/edk2" name="novatek_tv/android_p/device/linaro/bootloader/edk2" />
+  <project path="device/linaro/bootloader/OpenPlatformPkg" name="novatek_tv/android_p/device/linaro/bootloader/OpenPlatformPkg" />
+  <project path="device/linaro/hikey" name="novatek_tv/android_p/device/linaro/hikey" groups="device,hikey,pdk" />
+  <project path="device/linaro/hikey-kernel" name="novatek_tv/android_p/device/linaro/hikey-kernel" groups="device,hikey,pdk" clone-depth="1" />
+  <project path="device/sample" name="novatek_tv/android_p/device/sample" groups="pdk" />
+  <project path="external/aac" name="novatek_tv/android_p/platform/external/aac" groups="pdk" />
+  <project path="external/abi-compliance-checker" name="novatek_tv/android_p/platform/external/abi-compliance-checker" groups="pdk" />
+  <project path="external/abi-dumper" name="novatek_tv/android_p/platform/external/abi-dumper" groups="pdk" />
+  <project path="external/adhd" name="novatek_tv/android_p/platform/external/adhd" groups="pdk" />
+  <project path="external/adt-infra" name="novatek_tv/android_p/platform/external/adt-infra" groups="adt-infra,notdefault,pdk-fs" />
+  <project path="external/android-clat" name="novatek_tv/android_p/platform/external/android-clat" groups="pdk" />
+  <project path="external/androidplot" name="novatek_tv/android_p/platform/external/androidplot" groups="pdk" />
+  <project path="external/annotation-tools" name="novatek_tv/android_p/platform/external/annotation-tools" groups="pdk" />
+  <project path="external/ant-glob" name="novatek_tv/android_p/platform/external/ant-glob" groups="pdk" />
+  <project path="external/antlr" name="novatek_tv/android_p/platform/external/antlr" groups="pdk" />
+  <project path="external/apache-commons-math" name="novatek_tv/android_p/platform/external/apache-commons-math" groups="pdk" />
+  <project path="external/apache-harmony" name="novatek_tv/android_p/platform/external/apache-harmony" groups="pdk" />
+  <project path="external/apache-http" name="novatek_tv/android_p/platform/external/apache-http" groups="pdk" />
+  <project path="external/apache-xml" name="novatek_tv/android_p/platform/external/apache-xml" groups="pdk" />
+  <project path="external/archive-patcher" name="novatek_tv/android_p/platform/external/archive-patcher" groups="pdk" />
+  <project path="external/arm-neon-tests" name="novatek_tv/android_p/platform/external/arm-neon-tests" groups="vendor" />
+  <project path="external/autotest" name="novatek_tv/android_p/platform/external/autotest" groups="pdk-fs" />
+  <project path="external/avb" name="novatek_tv/android_p/platform/external/avb" groups="pdk" />
+  <project path="external/bart" name="novatek_tv/android_p/platform/external/bart" groups="pdk" />
+  <project path="external/blktrace" name="novatek_tv/android_p/platform/external/blktrace" groups="pdk" />
+  <project path="external/boringssl" name="novatek_tv/android_p/platform/external/boringssl" groups="pdk" />
+  <project path="external/bouncycastle" name="novatek_tv/android_p/platform/external/bouncycastle" groups="pdk" />
+  <project path="external/brotli" name="novatek_tv/android_p/platform/external/brotli" groups="pdk" />
+  <project path="external/bsdiff" name="novatek_tv/android_p/platform/external/bsdiff" groups="pdk" />
+  <project path="external/bzip2" name="novatek_tv/android_p/platform/external/bzip2" groups="pdk" />
+  <project path="external/caliper" name="novatek_tv/android_p/platform/external/caliper" groups="pdk" />
+  <project path="external/capstone" name="novatek_tv/android_p/platform/external/capstone" groups="pdk" />
+  <project path="external/cblas" name="novatek_tv/android_p/platform/external/cblas" groups="pdk" />
+  <project path="external/chromium-libpac" name="novatek_tv/android_p/platform/external/chromium-libpac" groups="pdk" />
+  <project path="external/chromium-trace" name="novatek_tv/android_p/platform/external/chromium-trace" groups="pdk" />
+  <project path="external/chromium-webview" name="novatek_tv/android_p/platform/external/chromium-webview" groups="pdk" clone-depth="1" />
+  <project path="external/clang" name="novatek_tv/android_p/platform/external/clang" groups="pdk" />
+  <project path="external/cmockery" name="novatek_tv/android_p/platform/external/cmockery" groups="pdk" />
+  <project path="external/cn-cbor" name="novatek_tv/android_p/platform/external/cn-cbor" groups="pdk" />
+  <project path="external/compiler-rt" name="novatek_tv/android_p/platform/external/compiler-rt" groups="pdk" />
+  <project path="external/conscrypt" name="novatek_tv/android_p/platform/external/conscrypt" groups="pdk" />
+  <project path="external/crcalc" name="novatek_tv/android_p/platform/external/crcalc" groups="pdk" />
+  <project path="external/cros/system_api" name="novatek_tv/android_p/platform/external/cros/system_api" groups="pdk" />
+  <project path="external/curl" name="novatek_tv/android_p/platform/external/curl" groups="pdk" />
+  <project path="external/dagger2" name="novatek_tv/android_p/platform/external/dagger2" groups="pdk" />
+  <project path="external/deqp" name="novatek_tv/android_p/platform/external/deqp" groups="pdk-fs" />
+  <project path="external/desugar" name="novatek_tv/android_p/platform/external/desugar" groups="pdk" />
+  <project path="external/devlib" name="novatek_tv/android_p/platform/external/devlib" groups="pdk" />
+  <project path="external/dexmaker" name="novatek_tv/android_p/platform/external/dexmaker" groups="pdk" />
+  <project path="external/dhcpcd-6.8.2" name="novatek_tv/android_p/platform/external/dhcpcd-6.8.2" groups="pdk" />
+  <project path="external/dlmalloc" name="novatek_tv/android_p/platform/external/dlmalloc" groups="pdk" />
+  <project path="external/dng_sdk" name="novatek_tv/android_p/platform/external/dng_sdk" groups="pdk" />
+  <project path="external/dnsmasq" name="novatek_tv/android_p/platform/external/dnsmasq" groups="pdk" />
+  <project path="external/doclava" name="novatek_tv/android_p/platform/external/doclava" groups="pdk" />
+  <project path="external/drm_gralloc" name="novatek_tv/android_p/platform/external/drm_gralloc" groups="pdk" />
+  <project path="external/drm_hwcomposer" name="novatek_tv/android_p/platform/external/drm_hwcomposer" groups="drm_hwcomposer,pdk-fs" />
+  <project path="external/droiddriver" name="novatek_tv/android_p/platform/external/droiddriver" groups="pdk" />
+  <project path="external/drrickorang" name="novatek_tv/android_p/platform/external/drrickorang" groups="pdk" />
+  <project path="external/dtc" name="novatek_tv/android_p/platform/external/dtc" groups="pdk"/>
+  <project path="external/e2fsprogs" name="novatek_tv/android_p/platform/external/e2fsprogs" groups="pdk" />
+  <project path="external/easymock" name="novatek_tv/android_p/platform/external/easymock" groups="pdk" />
+  <project path="external/eigen" name="novatek_tv/android_p/platform/external/eigen" groups="pdk" />
+  <project path="external/elfutils" name="novatek_tv/android_p/platform/external/elfutils" groups="pdk" />
+  <project path="external/emma" name="novatek_tv/android_p/platform/external/emma" groups="pdk" />
+  <project path="external/error_prone" name="novatek_tv/android_p/platform/external/error_prone" groups="pdk" />
+  <project path="external/esd" name="novatek_tv/android_p/platform/external/esd" groups="pdk" />
+  <project path="external/expat" name="novatek_tv/android_p/platform/external/expat" groups="pdk" />
+  <project path="external/eyes-free" name="novatek_tv/android_p/platform/external/eyes-free" groups="pdk" />
+  <project path="external/f2fs-tools" name="novatek_tv/android_p/platform/external/f2fs-tools" groups="pdk" />
+  <project path="external/fdlibm" name="novatek_tv/android_p/platform/external/fdlibm" groups="pdk" />
+  <project path="external/fec" name="novatek_tv/android_p/platform/external/fec" groups="pdk" />
+  <project path="external/fio" name="novatek_tv/android_p/platform/external/fio" groups="pdk" />
+  <project path="external/flac" name="novatek_tv/android_p/platform/external/flac" groups="pdk" />
+  <project path="external/flatbuffers" name="novatek_tv/android_p/platform/external/flatbuffers" groups="pdk" />
+  <project path="external/fonttools" name="novatek_tv/android_p/platform/external/fonttools" groups="pdk" />
+  <project path="external/freetype" name="novatek_tv/android_p/platform/external/freetype" groups="pdk" />
+  <project path="external/fsck_msdos" name="novatek_tv/android_p/platform/external/fsck_msdos" groups="pdk" />
+  <project path="external/gemmlowp" name="novatek_tv/android_p/platform/external/gemmlowp" groups="pdk" />
+  <project path="external/gflags" name="novatek_tv/android_p/platform/external/gflags" groups="pdk" />
+  <project path="external/giflib" name="novatek_tv/android_p/platform/external/giflib" groups="pdk,qcom_msm8x26" />
+  <project path="external/glide" name="novatek_tv/android_p/platform/external/glide" groups="pdk" />
+  <project path="external/golang-protobuf" name="novatek_tv/android_p/platform/external/golang-protobuf" groups="pdk" />
+  <project path="external/google-api-services-storage" name="novatek_tv/android_p/platform/external/google-api-services-storage" groups="pdk" />
+  <project path="external/google-benchmark" name="novatek_tv/android_p/platform/external/google-benchmark" groups="pdk" />
+  <project path="external/google-breakpad" name="novatek_tv/android_p/platform/external/google-breakpad" groups="pdk-fs" />
+  <project path="external/google-fonts/carrois-gothic-sc" name="novatek_tv/android_p/platform/external/google-fonts/carrois-gothic-sc" groups="pdk" />
+  <project path="external/google-fonts/coming-soon" name="novatek_tv/android_p/platform/external/google-fonts/coming-soon" groups="pdk" />
+  <project path="external/google-fonts/cutive-mono" name="novatek_tv/android_p/platform/external/google-fonts/cutive-mono" groups="pdk" />
+  <project path="external/google-fonts/dancing-script" name="novatek_tv/android_p/platform/external/google-fonts/dancing-script" groups="pdk" />
+  <project path="external/google-styleguide" name="novatek_tv/android_p/platform/external/google-styleguide" groups="pdk" />
+  <project path="external/google-tv-pairing-protocol" name="novatek_tv/android_p/platform/external/google-tv-pairing-protocol" groups="pdk" />
+  <project path="external/googletest" name="novatek_tv/android_p/platform/external/googletest" groups="pdk" />
+  <project path="external/gptfdisk" name="novatek_tv/android_p/platform/external/gptfdisk" groups="pdk" />
+  <project path="external/guava" name="novatek_tv/android_p/platform/external/guava" groups="pdk" />
+  <project path="external/guice" name="novatek_tv/android_p/platform/external/guice" groups="pdk" />
+  <project path="external/hamcrest" name="novatek_tv/android_p/platform/external/hamcrest" groups="pdk" />
+  <project path="external/harfbuzz_ng" name="novatek_tv/android_p/platform/external/harfbuzz_ng" groups="pdk,qcom_msm8x26" />
+  <project path="external/honggfuzz" name="novatek_tv/android_p/platform/external/honggfuzz" groups="pdk" />
+  <project path="external/hyphenation-patterns" name="novatek_tv/android_p/platform/external/hyphenation-patterns" groups="pdk" />
+  <project path="external/icu" name="novatek_tv/android_p/platform/external/icu" groups="pdk" />
+  <project path="external/ImageMagick" name="novatek_tv/android_p/platform/external/ImageMagick" groups="pdk" />
+  <project path="external/ims" name="novatek_tv/android_p/platform/external/ims" groups="pdk" />
+  <project path="external/iproute2" name="novatek_tv/android_p/platform/external/iproute2" groups="pdk" />
+  <project path="external/ipsec-tools" name="novatek_tv/android_p/platform/external/ipsec-tools" groups="pdk" />
+  <project path="external/iptables" name="novatek_tv/android_p/platform/external/iptables" groups="pdk" />
+  <project path="external/iputils" name="novatek_tv/android_p/platform/external/iputils" groups="pdk" />
+  <project path="external/iw" name="novatek_tv/android_p/platform/external/iw" groups="pdk" />
+  <project path="external/jacoco" name="novatek_tv/android_p/platform/external/jacoco" groups="pdk" />
+  <project path="external/jarjar" name="novatek_tv/android_p/platform/external/jarjar" groups="pdk" />
+  <project path="external/javaparser" name="novatek_tv/android_p/platform/external/javaparser" groups="pdk" />
+  <project path="external/javasqlite" name="novatek_tv/android_p/platform/external/javasqlite" groups="pdk" />
+  <project path="external/javassist" name="novatek_tv/android_p/platform/external/javassist" groups="pdk" />
+  <project path="external/jcommander" name="novatek_tv/android_p/platform/external/jcommander" groups="pdk" />
+  <project path="external/jdiff" name="novatek_tv/android_p/platform/external/jdiff" groups="pdk" />
+  <project path="external/jemalloc" name="novatek_tv/android_p/platform/external/jemalloc" groups="pdk" />
+  <project path="external/jline" name="novatek_tv/android_p/platform/external/jline" groups="pdk,tradefed,pdk-fs" />
+  <project path="external/jmdns" name="novatek_tv/android_p/platform/external/jmdns" groups="pdk" />
+  <project path="external/jsilver" name="novatek_tv/android_p/platform/external/jsilver" groups="pdk" />
+  <project path="external/jsmn" name="novatek_tv/android_p/platform/external/jsmn" groups="pdk" />
+  <project path="external/jsoncpp" name="novatek_tv/android_p/platform/external/jsoncpp" groups="pdk" />
+  <project path="external/jsr305" name="novatek_tv/android_p/platform/external/jsr305" groups="pdk" />
+  <project path="external/jsr330" name="novatek_tv/android_p/platform/external/jsr330" groups="pdk" />
+  <project path="external/junit" name="novatek_tv/android_p/platform/external/junit" groups="pdk" />
+  <project path="external/junit-params" name="novatek_tv/android_p/platform/external/junit-params" groups="pdk" />
+  <project path="external/kernel-headers" name="novatek_tv/android_p/platform/external/kernel-headers" groups="pdk" />
+  <project path="external/kmod" name="novatek_tv/android_p/platform/external/kmod" groups="pdk" />
+  <project path="external/kotlinc" name="novatek_tv/android_p/platform/external/kotlinc" groups="pdk" />
+  <project path="external/ksoap2" name="novatek_tv/android_p/platform/external/ksoap2" groups="pdk" />
+  <project path="external/libavc" name="novatek_tv/android_p/platform/external/libavc" groups="pdk" />
+  <project path="external/libbackup" name="novatek_tv/android_p/platform/external/libbackup" groups="pdk" />
+  <project path="external/libbrillo" name="novatek_tv/android_p/platform/external/libbrillo" groups="pdk" />
+  <project path="external/libcap" name="novatek_tv/android_p/platform/external/libcap" groups="pdk" />
+  <project path="external/libcap-ng" name="novatek_tv/android_p/platform/external/libcap-ng" groups="pdk" />
+  <project path="external/libchrome" name="novatek_tv/android_p/platform/external/libchrome" groups="pdk" />
+  <project path="external/libconstrainedcrypto" name="novatek_tv/android_p/platform/external/libconstrainedcrypto" groups="pdk" />
+  <project path="external/libcups" name="novatek_tv/android_p/platform/external/libcups" groups="pdk-cw-fs,pdk-fs" />
+  <project path="external/libcxx" name="novatek_tv/android_p/platform/external/libcxx" groups="pdk" />
+  <project path="external/libcxxabi" name="novatek_tv/android_p/platform/external/libcxxabi" groups="pdk" />
+  <project path="external/libdaemon" name="novatek_tv/android_p/platform/external/libdaemon" groups="pdk" />
+  <project path="external/libdivsufsort" name="novatek_tv/android_p/platform/external/libdivsufsort" groups="pdk" />
+  <project path="external/libdrm" name="novatek_tv/android_p/platform/external/libdrm" groups="pdk" />
+  <project path="external/libedit" name="novatek_tv/android_p/platform/external/libedit" groups="pdk" />
+  <project path="external/libese" name="novatek_tv/android_p/platform/external/libese" groups="pdk" />
+  <project path="external/libevent" name="novatek_tv/android_p/platform/external/libevent" groups="pdk" />
+  <project path="external/libexif" name="novatek_tv/android_p/platform/external/libexif" groups="pdk" />
+  <project path="external/libffi" name="novatek_tv/android_p/platform/external/libffi" groups="pdk" />
+  <project path="external/libgsm" name="novatek_tv/android_p/platform/external/libgsm" groups="pdk" />
+  <project path="external/libhevc" name="novatek_tv/android_p/platform/external/libhevc" groups="pdk" />
+  <project path="external/libjpeg-turbo" name="novatek_tv/android_p/platform/external/libjpeg-turbo" groups="pdk" />
+  <project path="external/libldac" name="novatek_tv/android_p/platform/external/libldac" groups="pdk" />
+  <project path="external/libmicrohttpd" name="novatek_tv/android_p/platform/external/libmicrohttpd" groups="pdk" />
+  <project path="external/libmojo" name="novatek_tv/android_p/platform/external/libmojo" groups="pdk" />
+  <project path="external/libmpeg2" name="novatek_tv/android_p/platform/external/libmpeg2" groups="pdk" />
+  <project path="external/libmtp" name="novatek_tv/android_p/platform/external/libmtp" groups="pdk" />
+  <project path="external/libnetfilter_conntrack" name="novatek_tv/android_p/platform/external/libnetfilter_conntrack" groups="pdk" />
+  <project path="external/libnfnetlink" name="novatek_tv/android_p/platform/external/libnfnetlink" groups="pdk" />
+  <project path="external/libnl" name="novatek_tv/android_p/platform/external/libnl" groups="pdk" />
+  <project path="external/libogg" name="novatek_tv/android_p/platform/external/libogg" groups="pdk" />
+  <project path="external/libopus" name="novatek_tv/android_p/platform/external/libopus" groups="pdk" />
+  <project path="external/libpcap" name="novatek_tv/android_p/platform/external/libpcap" groups="pdk" />
+  <project path="external/libphonenumber" name="novatek_tv/android_p/platform/external/libphonenumber" groups="pdk" />
+  <project path="external/libpng" name="novatek_tv/android_p/platform/external/libpng" groups="pdk" />
+  <project path="external/libtextclassifier" name="novatek_tv/android_p/platform/external/libtextclassifier" groups="pdk" />
+  <project path="external/libunwind" name="novatek_tv/android_p/platform/external/libunwind" groups="pdk" />
+  <project path="external/libunwind_llvm" name="novatek_tv/android_p/platform/external/libunwind_llvm" groups="pdk" />
+  <project path="external/libusb" name="novatek_tv/android_p/platform/external/libusb" groups="pdk" />
+  <project path="external/libusb-compat" name="novatek_tv/android_p/platform/external/libusb-compat" groups="pdk" />
+  <project path="external/libvncserver" name="novatek_tv/android_p/platform/external/libvncserver" groups="pdk" />
+  <project path="external/libvpx" name="novatek_tv/android_p/platform/external/libvpx" groups="pdk" />
+  <project path="external/libvterm" name="novatek_tv/android_p/platform/external/libvterm" groups="pdk" />
+  <project path="external/libxaac" name="novatek_tv/android_p/platform/external/libxaac" groups="pdk" />
+  <project path="external/libxcam" name="novatek_tv/android_p/platform/external/libxcam" groups="pdk" />
+  <project path="external/libxkbcommon" name="novatek_tv/android_p/platform/external/libxkbcommon" groups="pdk" />
+  <project path="external/libxml2" name="novatek_tv/android_p/platform/external/libxml2" groups="pdk,libxml2" />
+  <project path="external/libyuv" name="novatek_tv/android_p/platform/external/libyuv" groups="pdk,libyuv" />
+  <project path="external/linux-kselftest" name="novatek_tv/android_p/platform/external/linux-kselftest" groups="vts,pdk" />
+  <project path="external/lisa" name="novatek_tv/android_p/platform/external/lisa" groups="pdk" />
+  <project path="external/llvm" name="novatek_tv/android_p/platform/external/llvm" groups="pdk" />
+  <project path="external/lmfit" name="novatek_tv/android_p/platform/external/lmfit" groups="pdk" />
+  <project path="external/ltp" name="novatek_tv/android_p/platform/external/ltp" groups="vts,pdk" />
+  <project path="external/lz4" name="novatek_tv/android_p/platform/external/lz4" groups="pdk" />
+  <project path="external/lzma" name="novatek_tv/android_p/platform/external/lzma" groups="pdk" />
+  <project path="external/markdown" name="novatek_tv/android_p/platform/external/markdown" groups="pdk" />
+  <project path="external/mdnsresponder" name="novatek_tv/android_p/platform/external/mdnsresponder" groups="pdk" />
+  <project path="external/mesa3d" name="novatek_tv/android_p/platform/external/mesa3d" groups="pdk-cw-fs,pdk-fs" />
+  <project path="external/Microsoft-GSL" name="novatek_tv/android_p/platform/external/Microsoft-GSL" groups="pdk" />
+  <project path="external/minijail" name="novatek_tv/android_p/platform/external/minijail" groups="pdk" />
+  <project path="external/mksh" name="novatek_tv/android_p/platform/external/mksh" groups="pdk" />
+  <project path="external/mmc-utils" name="novatek_tv/android_p/platform/external/mmc-utils" groups="pdk" />
+  <project path="external/mockftpserver" name="novatek_tv/android_p/platform/external/mockftpserver" groups="pdk" />
+  <project path="external/mockito" name="novatek_tv/android_p/platform/external/mockito" groups="pdk" />
+  <project path="external/mockwebserver" name="novatek_tv/android_p/platform/external/mockwebserver" groups="pdk" />
+  <project path="external/modp_b64" name="novatek_tv/android_p/platform/external/modp_b64" groups="pdk" />
+  <project path="external/mp4parser" name="novatek_tv/android_p/platform/external/mp4parser" groups="pdk" />
+  <project path="external/mtpd" name="novatek_tv/android_p/platform/external/mtpd" groups="pdk" />
+  <project path="external/nanohttpd" name="novatek_tv/android_p/platform/external/nanohttpd" groups="pdk" />
+  <project path="external/nanopb-c" name="novatek_tv/android_p/platform/external/nanopb-c" groups="pdk" />
+  <project path="external/naver-fonts" name="novatek_tv/android_p/platform/external/naver-fonts" groups="pdk" />
+  <project path="external/netcat" name="novatek_tv/android_p/platform/external/netcat" groups="pdk" />
+  <project path="external/neven" name="novatek_tv/android_p/platform/external/neven" groups="pdk" />
+  <project path="external/nfacct" name="novatek_tv/android_p/platform/external/nfacct" groups="pdk" />
+  <project path="external/nist-pkits" name="novatek_tv/android_p/platform/external/nist-pkits" groups="pdk" />
+  <project path="external/nist-sip" name="novatek_tv/android_p/platform/external/nist-sip" groups="pdk" />
+  <project path="external/nos/host/android" name="novatek_tv/android_p/platform/external/nos/host/android" groups="pdk" />
+  <project path="external/nos/host/generic" name="novatek_tv/android_p/platform/external/nos/host/generic" groups="pdk" />
+  <project path="external/nos/test/system-test-harness" name="novatek_tv/android_p/platform/external/nos/test/system-test-harness" groups="pdk" />
+  <project path="external/noto-fonts" name="novatek_tv/android_p/platform/external/noto-fonts" groups="pdk" />
+  <project path="external/oauth" name="novatek_tv/android_p/platform/external/oauth" groups="pdk" />
+  <project path="external/objenesis" name="novatek_tv/android_p/platform/external/objenesis" groups="pdk" />
+  <project path="external/oj-libjdwp" name="novatek_tv/android_p/platform/external/oj-libjdwp" groups="pdk" />
+  <project path="external/okhttp" name="novatek_tv/android_p/platform/external/okhttp" groups="pdk" />
+  <project path="external/one-true-awk" name="novatek_tv/android_p/platform/external/one-true-awk" groups="pdk" />
+  <project path="external/opencv" name="novatek_tv/android_p/platform/external/opencv" groups="pdk-cw-fs,pdk-fs" />
+  <project path="external/owasp/sanitizer" name="novatek_tv/android_p/platform/external/owasp/sanitizer" groups="pdk" />
+  <project path="external/parameter-framework" name="novatek_tv/android_p/platform/external/parameter-framework" groups="pdk" />
+  <project path="external/pcre" name="novatek_tv/android_p/platform/external/pcre" groups="pdk" />
+  <project path="external/pdfium" name="novatek_tv/android_p/platform/external/pdfium" groups="pdk" />
+  <project path="external/perf_data_converter" name="novatek_tv/android_p/platform/external/perf_data_converter" groups="pdk" />
+  <project path="external/perfetto" name="novatek_tv/android_p/platform/external/perfetto" groups="pdk" />
+  <project path="external/piex" name="novatek_tv/android_p/platform/external/piex" groups="pdk" />
+  <project path="external/ply" name="novatek_tv/android_p/platform/external/ply" groups="pdk" />
+  <project path="external/ppp" name="novatek_tv/android_p/platform/external/ppp" groups="pdk" />
+  <project path="external/proguard" name="novatek_tv/android_p/platform/external/proguard" groups="pdk" />
+  <project path="external/protobuf" name="novatek_tv/android_p/platform/external/protobuf" groups="pdk" />
+  <project path="external/puffin" name="novatek_tv/android_p/platform/external/puffin" groups="pdk" />
+  <project path="external/python/appdirs" name="novatek_tv/android_p/platform/external/python/appdirs" groups="vts,pdk" />
+  <project path="external/python/cachetools" name="novatek_tv/android_p/platform/external/python/cachetools" groups="vts,pdk" />
+  <project path="external/python/cpython2" name="novatek_tv/android_p/platform/external/python/cpython2" groups="pdk" />
+  <project path="external/python/cpython3" name="novatek_tv/android_p/platform/external/python/cpython3" groups="pdk" />
+  <project path="external/python/dill" name="novatek_tv/android_p/platform/external/python/dill" groups="vts,pdk" />
+  <project path="external/python/enum" name="novatek_tv/android_p/platform/external/python/enum" groups="vts,pdk" />
+  <project path="external/python/enum34" name="novatek_tv/android_p/platform/external/python/enum34" groups="vts,pdk" />
+  <project path="external/python/future" name="novatek_tv/android_p/platform/external/python/future" groups="vts,pdk" />
+  <project path="external/python/futures" name="novatek_tv/android_p/platform/external/python/futures" groups="vts,pdk" />
+  <project path="external/python/gapic-google-cloud-pubsub-v1" name="novatek_tv/android_p/platform/external/python/gapic-google-cloud-pubsub-v1" groups="vts,pdk" />
+  <project path="external/python/google-api-python-client" name="novatek_tv/android_p/platform/external/python/google-api-python-client" groups="vts,pdk" />
+  <project path="external/python/google-auth" name="novatek_tv/android_p/platform/external/python/google-auth" groups="vts,pdk" />
+  <project path="external/python/google-auth-httplib2" name="novatek_tv/android_p/platform/external/python/google-auth-httplib2" groups="vts,pdk" />
+  <project path="external/python/google-cloud-core" name="novatek_tv/android_p/platform/external/python/google-cloud-core" groups="vts,pdk" />
+  <project path="external/python/google-cloud-pubsub" name="novatek_tv/android_p/platform/external/python/google-cloud-pubsub" groups="vts,pdk" />
+  <project path="external/python/google-gax" name="novatek_tv/android_p/platform/external/python/google-gax" groups="vts,pdk" />
+  <project path="external/python/googleapis" name="novatek_tv/android_p/platform/external/python/googleapis" groups="vts,pdk" />
+  <project path="external/python/grpc-google-iam-v1" name="novatek_tv/android_p/platform/external/python/grpc-google-iam-v1" groups="vts,pdk" />
+  <project path="external/python/grpcio" name="novatek_tv/android_p/platform/external/python/grpcio" groups="vts,pdk" />
+  <project path="external/python/httplib2" name="novatek_tv/android_p/platform/external/python/httplib2" groups="vts,pdk" />
+  <project path="external/python/matplotlib" name="novatek_tv/android_p/platform/external/python/matplotlib" groups="vts,pdk" />
+  <project path="external/python/numpy" name="novatek_tv/android_p/platform/external/python/numpy" groups="vts,pdk" />
+  <project path="external/python/oauth2client" name="novatek_tv/android_p/platform/external/python/oauth2client" groups="vts,pdk" />
+  <project path="external/python/olefile" name="novatek_tv/android_p/platform/external/python/olefile" groups="vts,pdk" />
+  <project path="external/python/packaging" name="novatek_tv/android_p/platform/external/python/packaging" groups="vts,pdk" />
+  <project path="external/python/parse" name="novatek_tv/android_p/platform/external/python/parse" groups="vts,pdk" />
+  <project path="external/python/Pillow" name="novatek_tv/android_p/platform/external/python/Pillow" groups="vts,pdk" />
+  <project path="external/python/ply" name="novatek_tv/android_p/platform/external/python/ply" groups="vts,pdk" />
+  <project path="external/python/proto-google-cloud-pubsub-v1" name="novatek_tv/android_p/platform/external/python/proto-google-cloud-pubsub-v1" groups="vts,pdk" />
+  <project path="external/python/protobuf" name="novatek_tv/android_p/platform/external/python/protobuf" groups="vts,pdk" />
+  <project path="external/python/pyasn1" name="novatek_tv/android_p/platform/external/python/pyasn1" groups="vts,pdk" />
+  <project path="external/python/pyasn1-modules" name="novatek_tv/android_p/platform/external/python/pyasn1-modules" groups="vts,pdk" />
+  <project path="external/python/pyparsing" name="novatek_tv/android_p/platform/external/python/pyparsing" groups="vts,pdk" />
+  <project path="external/python/requests" name="novatek_tv/android_p/platform/external/python/requests" groups="vts,pdk" />
+  <project path="external/python/rsa" name="novatek_tv/android_p/platform/external/python/rsa" groups="vts,pdk" />
+  <project path="external/python/scipy" name="novatek_tv/android_p/platform/external/python/scipy" groups="vts,pdk" />
+  <project path="external/python/setuptools" name="novatek_tv/android_p/platform/external/python/setuptools" groups="vts,pdk" />
+  <project path="external/python/six" name="novatek_tv/android_p/platform/external/python/six" groups="vts,pdk" />
+  <project path="external/python/uritemplates" name="novatek_tv/android_p/platform/external/python/uritemplates" groups="vts,pdk" />
+  <project path="external/rappor" name="novatek_tv/android_p/platform/external/rappor" groups="pdk" />
+  <project path="external/replicaisland" name="novatek_tv/android_p/platform/external/replicaisland" groups="pdk" />
+  <project path="external/rmi4utils" name="novatek_tv/android_p/platform/external/rmi4utils" groups="pdk" />
+  <project path="external/robolectric" name="novatek_tv/android_p/platform/external/robolectric" groups="pdk-cw-fs,pdk-fs" />
+  <project path="external/robolectric-shadows" name="novatek_tv/android_p/platform/external/robolectric-shadows" groups="pdk-cw-fs,pdk-fs" />
+  <project path="external/roboto-fonts" name="novatek_tv/android_p/platform/external/roboto-fonts" groups="pdk" />
+  <project path="external/rootdev" name="novatek_tv/android_p/platform/external/rootdev" groups="pdk" />
+  <project path="external/safe-iop" name="novatek_tv/android_p/platform/external/safe-iop" groups="pdk" />
+  <project path="external/scapy" name="novatek_tv/android_p/platform/external/scapy" groups="pdk-fs" />
+  <project path="external/scrypt" name="novatek_tv/android_p/platform/external/scrypt" groups="pdk" />
+  <project path="external/seccomp-tests" name="novatek_tv/android_p/platform/external/seccomp-tests" groups="pdk" />
+  <project path="external/selinux" name="novatek_tv/android_p/platform/external/selinux" groups="pdk" />
+  <project path="external/sfntly" name="novatek_tv/android_p/platform/external/sfntly" groups="pdk,qcom_msm8x26" />
+  <project path="external/shaderc/spirv-headers" name="novatek_tv/android_p/platform/external/shaderc/spirv-headers" groups="pdk" />
+  <project path="external/shflags" name="novatek_tv/android_p/platform/external/shflags" groups="pdk" />
+  <project path="external/skia" name="novatek_tv/android_p/platform/external/skia" groups="pdk,qcom_msm8x26" />
+  <project path="external/skqp" name="novatek_tv/android_p/platform/external/skqp" groups="cts" clone-depth="1" />
+  <project path="external/sl4a" name="novatek_tv/android_p/platform/external/sl4a" groups="pdk" />
+  <project path="external/slf4j" name="novatek_tv/android_p/platform/external/slf4j" groups="pdk" />
+  <project path="external/smali" name="novatek_tv/android_p/platform/external/smali" groups="pdk" />
+  <project path="external/snakeyaml" name="novatek_tv/android_p/platform/external/snakeyaml" groups="pdk" />
+  <project path="external/sonic" name="novatek_tv/android_p/platform/external/sonic" groups="pdk" />
+  <project path="external/sonivox" name="novatek_tv/android_p/platform/external/sonivox" groups="pdk" />
+  <project path="external/speex" name="novatek_tv/android_p/platform/external/speex" groups="pdk" />
+  <project path="external/spirv-llvm" name="novatek_tv/android_p/platform/external/spirv-llvm" groups="pdk" />
+  <project path="external/sqlite" name="novatek_tv/android_p/platform/external/sqlite" groups="pdk" />
+  <project path="external/squashfs-tools" name="novatek_tv/android_p/platform/external/squashfs-tools" groups="pdk" />
+  <project path="external/strace" name="novatek_tv/android_p/platform/external/strace" groups="pdk" />
+  <project path="external/stressapptest" name="novatek_tv/android_p/platform/external/stressapptest" groups="pdk" />
+  <project path="external/subsampling-scale-image-view" name="novatek_tv/android_p/platform/external/subsampling-scale-image-view" clone-depth="1" />
+  <project path="external/swiftshader" name="novatek_tv/android_p/platform/external/swiftshader" groups="pdk" />
+  <project path="external/syslinux" name="novatek_tv/android_p/platform/external/syslinux" groups="pdk" />
+  <project path="external/tagsoup" name="novatek_tv/android_p/platform/external/tagsoup" groups="pdk" />
+  <project path="external/tcpdump" name="novatek_tv/android_p/platform/external/tcpdump" groups="pdk" />
+  <project path="external/tensorflow" name="novatek_tv/android_p/platform/external/tensorflow" groups="pdk" />
+  <project path="external/testng" name="novatek_tv/android_p/platform/external/testng" groups="pdk" />
+  <project path="external/timezonepicker-support" name="novatek_tv/android_p/platform/external/timezonepicker-support" groups="pdk" />
+  <project path="external/tinyalsa" name="novatek_tv/android_p/platform/external/tinyalsa" groups="pdk" />
+  <project path="external/tinycompress" name="novatek_tv/android_p/platform/external/tinycompress" groups="pdk" />
+  <project path="external/tinyxml" name="novatek_tv/android_p/platform/external/tinyxml" groups="pdk" />
+  <project path="external/tinyxml2" name="novatek_tv/android_p/platform/external/tinyxml2" groups="pdk" />
+  <project path="external/toolchain-utils" name="novatek_tv/android_p/platform/external/toolchain-utils" />
+  <project path="external/toybox" name="novatek_tv/android_p/platform/external/toybox" groups="pdk" />
+  <project path="external/tpm2" name="novatek_tv/android_p/platform/external/tpm2" groups="pdk" />
+  <project path="external/trappy" name="novatek_tv/android_p/platform/external/trappy" groups="pdk" />
+  <project path="external/tremolo" name="novatek_tv/android_p/platform/external/tremolo" groups="pdk" />
+  <project path="external/turbine" name="novatek_tv/android_p/platform/external/turbine" groups="pdk" />
+  <project path="external/unicode" name="novatek_tv/android_p/platform/external/unicode" groups="pdk" />
+  <project path="external/universal-tween-engine" name="novatek_tv/android_p/platform/external/universal-tween-engine" />
+  <project path="external/v4l2_codec2" name="novatek_tv/android_p/platform/external/v4l2_codec2" groups="pdk" />
+  <project path="external/v8" name="novatek_tv/android_p/platform/external/v8" groups="pdk" />
+  <project path="external/valgrind" name="novatek_tv/android_p/platform/external/valgrind" groups="pdk" />
+  <project path="external/vboot_reference" name="novatek_tv/android_p/platform/external/vboot_reference" groups="vboot,pdk-fs" />
+  <project path="external/vixl" name="novatek_tv/android_p/platform/external/vixl" groups="pdk" />
+  <project path="external/vogar" name="novatek_tv/android_p/platform/external/vogar" groups="pdk" />
+  <project path="external/volley" name="novatek_tv/android_p/platform/external/volley" groups="pdk" />
+  <project path="external/vulkan-validation-layers" name="novatek_tv/android_p/platform/external/vulkan-validation-layers" groups="pdk" />
+  <project path="external/walt" name="novatek_tv/android_p/platform/external/walt" groups="pdk" />
+  <project path="external/wayland" name="novatek_tv/android_p/platform/external/wayland" groups="pdk" />
+  <project path="external/wayland-protocols" name="novatek_tv/android_p/platform/external/wayland-protocols" groups="pdk" />
+  <project path="external/webp" name="novatek_tv/android_p/platform/external/webp" groups="pdk,qcom_msm8x26" />
+  <project path="external/webrtc" name="novatek_tv/android_p/platform/external/webrtc" groups="pdk" />
+  <project path="external/webview_support_interfaces" name="novatek_tv/android_p/platform/external/webview_support_interfaces" groups="pdk" />
+  <project path="external/wpa_supplicant_8" name="novatek_tv/android_p/platform/external/wpa_supplicant_8" groups="pdk" />
+  <project path="external/wycheproof" name="novatek_tv/android_p/platform/external/wycheproof" groups="pdk" />
+  <project path="external/x264" name="novatek_tv/android_p/platform/external/x264" groups="pdk" />
+  <project path="external/xmlrpcpp" name="novatek_tv/android_p/platform/external/xmlrpcpp" groups="pdk" />
+  <project path="external/xmp_toolkit" name="novatek_tv/android_p/platform/external/xmp_toolkit" groups="pdk" />
+  <project path="external/xz-embedded" name="novatek_tv/android_p/platform/external/xz-embedded" groups="pdk" />
+  <project path="external/zlib" name="novatek_tv/android_p/platform/external/zlib" groups="pdk" />
+  <project path="external/zopfli" name="novatek_tv/android_p/platform/external/zopfli" groups="pdk" />
+  <project path="external/zxing" name="novatek_tv/android_p/platform/external/zxing" groups="pdk" />
+  <project path="frameworks/av" name="novatek_tv/android_p/platform/frameworks/av" groups="pdk" />
+  <project path="frameworks/base" name="novatek_tv/android_p/platform/frameworks/base" groups="pdk-cw-fs,pdk-fs" />
+  <project path="frameworks/compile/libbcc" name="novatek_tv/android_p/platform/frameworks/compile/libbcc" groups="pdk" />
+  <project path="frameworks/compile/mclinker" name="novatek_tv/android_p/platform/frameworks/compile/mclinker" groups="pdk" />
+  <project path="frameworks/compile/slang" name="novatek_tv/android_p/platform/frameworks/compile/slang" groups="pdk" />
+  <project path="frameworks/data-binding" name="novatek_tv/android_p/platform/frameworks/data-binding" groups="pdk-cw-fs,pdk-fs" />
+  <project path="frameworks/ex" name="novatek_tv/android_p/platform/frameworks/ex" groups="pdk-cw-fs,pdk-fs" />
+  <project path="frameworks/hardware/interfaces" name="novatek_tv/android_p/platform/frameworks/hardware/interfaces" groups="pdk" />
+  <project path="frameworks/layoutlib" name="novatek_tv/android_p/platform/frameworks/layoutlib" groups="pdk-cw-fs,pdk-fs" />
+  <project path="frameworks/minikin" name="novatek_tv/android_p/platform/frameworks/minikin" groups="pdk-cw-fs,pdk-fs" />
+  <project path="frameworks/ml" name="novatek_tv/android_p/platform/frameworks/ml" groups="pdk" />
+  <project path="frameworks/multidex" name="novatek_tv/android_p/platform/frameworks/multidex" groups="pdk-cw-fs,pdk-fs" />
+  <project path="frameworks/native" name="novatek_tv/android_p/platform/frameworks/native" groups="pdk" />
+  <project path="frameworks/opt/bitmap" name="novatek_tv/android_p/platform/frameworks/opt/bitmap" groups="pdk-fs" />
+  <project path="frameworks/opt/calendar" name="novatek_tv/android_p/platform/frameworks/opt/calendar" groups="pdk-cw-fs,pdk-fs" />
+  <project path="frameworks/opt/car/services" name="novatek_tv/android_p/platform/frameworks/opt/car/services" groups="pdk-fs" />
+  <project path="frameworks/opt/car/setupwizard" name="novatek_tv/android_p/platform/frameworks/opt/car/setupwizard" groups="pdk" />
+  <project path="frameworks/opt/chips" name="novatek_tv/android_p/platform/frameworks/opt/chips" groups="pdk-cw-fs,pdk-fs" />
+  <project path="frameworks/opt/colorpicker" name="novatek_tv/android_p/platform/frameworks/opt/colorpicker" groups="pdk-cw-fs,pdk-fs" />
+  <project path="frameworks/opt/datetimepicker" name="novatek_tv/android_p/platform/frameworks/opt/datetimepicker" groups="pdk-cw-fs,pdk-fs" />
+  <project path="frameworks/opt/inputconnectioncommon" name="novatek_tv/android_p/platform/frameworks/opt/inputconnectioncommon" groups="pdk-fs" />
+  <project path="frameworks/opt/inputmethodcommon" name="novatek_tv/android_p/platform/frameworks/opt/inputmethodcommon" groups="pdk-cw-fs,pdk-fs" />
+  <project path="frameworks/opt/net/ethernet" name="novatek_tv/android_p/platform/frameworks/opt/net/ethernet" groups="pdk-fs" />
+  <project path="frameworks/opt/net/ims" name="novatek_tv/android_p/platform/frameworks/opt/net/ims" groups="frameworks_ims,pdk-cw-fs,pdk-fs" />
+  <project path="frameworks/opt/net/lowpan" name="novatek_tv/android_p/platform/frameworks/opt/net/lowpan" groups="pdk-fs" />
+  <project path="frameworks/opt/net/voip" name="novatek_tv/android_p/platform/frameworks/opt/net/voip" groups="pdk-cw-fs,pdk-fs" />
+  <project path="frameworks/opt/net/wifi" name="novatek_tv/android_p/platform/frameworks/opt/net/wifi" groups="pdk" />
+  <project path="frameworks/opt/photoviewer" name="novatek_tv/android_p/platform/frameworks/opt/photoviewer" groups="pdk-cw-fs,pdk-fs" />
+  <project path="frameworks/opt/setupwizard" name="novatek_tv/android_p/platform/frameworks/opt/setupwizard" groups="pdk-cw-fs,pdk-fs" />
+  <project path="frameworks/opt/telephony" name="novatek_tv/android_p/platform/frameworks/opt/telephony" groups="pdk" />
+  <project path="frameworks/opt/timezonepicker" name="novatek_tv/android_p/platform/frameworks/opt/timezonepicker" groups="pdk-cw-fs,pdk-fs" />
+  <project path="frameworks/opt/vcard" name="novatek_tv/android_p/platform/frameworks/opt/vcard" groups="pdk-cw-fs,pdk-fs" />
+  <project path="frameworks/rs" name="novatek_tv/android_p/platform/frameworks/rs" groups="pdk" />
+  <project path="frameworks/support" name="novatek_tv/android_p/platform/frameworks/support" groups="pdk-cw-fs,pdk-fs" />
+  <project path="frameworks/wilhelm" name="novatek_tv/android_p/platform/frameworks/wilhelm" groups="pdk-cw-fs,pdk-fs" />
+  <project path="hardware/akm" name="novatek_tv/android_p/platform/hardware/akm" groups="pdk" />
+  <project path="hardware/broadcom/libbt" name="novatek_tv/android_p/platform/hardware/broadcom/libbt" groups="pdk" />
+  <project path="hardware/broadcom/wlan" name="novatek_tv/android_p/platform/hardware/broadcom/wlan" groups="pdk,broadcom_wlan" />
+  <project path="hardware/google/apf" name="novatek_tv/android_p/platform/hardware/google/apf" groups="pdk" />
+  <project path="hardware/google/easel" name="novatek_tv/android_p/platform/hardware/google/easel" groups="pdk,easel" />
+  <project path="hardware/google/interfaces" name="novatek_tv/android_p/platform/hardware/google/interfaces" groups="pdk" />
+  <project path="hardware/google/av" name="novatek_tv/android_p/platform/hardware/google/av" groups="pdk" />
+  <project path="hardware/intel/audio_media" name="novatek_tv/android_p/platform/hardware/intel/audio_media" groups="intel,pdk" />
+  <project path="hardware/intel/bootstub" name="novatek_tv/android_p/platform/hardware/intel/bootstub" groups="intel,pdk" />
+  <project path="hardware/intel/common/bd_prov" name="novatek_tv/android_p/platform/hardware/intel/common/bd_prov" groups="intel,pdk" />
+  <project path="hardware/intel/common/libmix" name="novatek_tv/android_p/platform/hardware/intel/common/libmix" groups="intel,pdk" />
+  <project path="hardware/intel/common/libstagefrighthw" name="novatek_tv/android_p/platform/hardware/intel/common/libstagefrighthw" groups="intel,pdk" />
+  <project path="hardware/intel/common/libva" name="novatek_tv/android_p/platform/hardware/intel/common/libva" groups="intel,pdk" />
+  <project path="hardware/intel/common/libwsbm" name="novatek_tv/android_p/platform/hardware/intel/common/libwsbm" groups="intel,pdk" />
+  <project path="hardware/intel/common/omx-components" name="novatek_tv/android_p/platform/hardware/intel/common/omx-components" groups="intel,pdk" />
+  <project path="hardware/intel/common/utils" name="novatek_tv/android_p/platform/hardware/intel/common/utils" groups="intel,pdk" />
+  <project path="hardware/intel/common/wrs_omxil_core" name="novatek_tv/android_p/platform/hardware/intel/common/wrs_omxil_core" groups="intel,pdk" />
+  <project path="hardware/intel/img/hwcomposer" name="novatek_tv/android_p/platform/hardware/intel/img/hwcomposer" groups="intel,pdk" />
+  <project path="hardware/intel/img/psb_headers" name="novatek_tv/android_p/platform/hardware/intel/img/psb_headers" groups="intel,pdk" />
+  <project path="hardware/intel/img/psb_video" name="novatek_tv/android_p/platform/hardware/intel/img/psb_video" groups="intel,pdk" />
+  <project path="hardware/intel/sensors" name="novatek_tv/android_p/platform/hardware/intel/sensors" groups="intel_sensors,pdk" />
+  <project path="hardware/interfaces" name="novatek_tv/android_p/platform/hardware/interfaces" groups="pdk" />
+  <project path="hardware/invensense" name="novatek_tv/android_p/platform/hardware/invensense" groups="invensense,pdk" />
+  <project path="hardware/libhardware" name="novatek_tv/android_p/platform/hardware/libhardware" groups="pdk" />
+  <project path="hardware/libhardware_legacy" name="novatek_tv/android_p/platform/hardware/libhardware_legacy" groups="pdk" />
+  <project path="hardware/marvell/bt" name="novatek_tv/android_p/platform/hardware/marvell/bt" groups="marvell_bt,pdk" />
+  <project path="hardware/nxp/nfc" name="novatek_tv/android_p/platform/hardware/nxp/nfc" groups="pdk" />
+  <project path="hardware/nxp/secure_element" name="novatek_tv/android_p/platform/hardware/nxp/secure_element" groups="pdk" />
+  <project path="hardware/qcom/audio" name="novatek_tv/android_p/platform/hardware/qcom/audio" groups="qcom,qcom_audio,pdk-qcom" />
+  <project path="hardware/qcom/bootctrl" name="novatek_tv/android_p/platform/hardware/qcom/bootctrl" groups="pdk-qcom" />
+  <project path="hardware/qcom/bt" name="novatek_tv/android_p/platform/hardware/qcom/bt" groups="qcom,pdk-qcom" />
+  <project path="hardware/qcom/camera" name="novatek_tv/android_p/platform/hardware/qcom/camera" groups="qcom_camera,pdk-qcom" />
+  <project path="hardware/qcom/data/ipacfg-mgr" name="novatek_tv/android_p/platform/hardware/qcom/data/ipacfg-mgr" groups="qcom,pdk-qcom" />
+  <project path="hardware/qcom/display" name="novatek_tv/android_p/platform/hardware/qcom/display" groups="pdk-qcom,qcom,qcom_display" />
+  <project path="hardware/qcom/gps" name="novatek_tv/android_p/platform/hardware/qcom/gps" groups="qcom,qcom_gps,pdk-qcom" />
+  <project path="hardware/qcom/keymaster" name="novatek_tv/android_p/platform/hardware/qcom/keymaster" groups="qcom,qcom_keymaster,pdk-qcom" />
+  <project path="hardware/qcom/media" name="novatek_tv/android_p/platform/hardware/qcom/media" groups="qcom,pdk-qcom" />
+  <project path="hardware/qcom/msm8960" name="novatek_tv/android_p/platform/hardware/qcom/msm8960" groups="qcom_msm8960,pdk-qcom" />
+  <project path="hardware/qcom/msm8994" name="novatek_tv/android_p/platform/hardware/qcom/msm8994" groups="qcom_msm8994,pdk-qcom" />
+  <project path="hardware/qcom/msm8996" name="novatek_tv/android_p/platform/hardware/qcom/msm8996" groups="qcom_msm8996,pdk-qcom" />
+  <project path="hardware/qcom/msm8998" name="novatek_tv/android_p/platform/hardware/qcom/msm8998" groups="qcom_msm8998,pdk-qcom" />
+  <project path="hardware/qcom/msm8x09" name="novatek_tv/android_p/platform/hardware/qcom/msm8x09" groups="qcom_msm8x09" />
+  <project path="hardware/qcom/msm8x26" name="novatek_tv/android_p/platform/hardware/qcom/msm8x26" groups="qcom_msm8x26,pdk-qcom" />
+  <project path="hardware/qcom/msm8x27" name="novatek_tv/android_p/platform/hardware/qcom/msm8x27" groups="qcom_msm8x27,pdk-qcom" />
+  <project path="hardware/qcom/msm8x84" name="novatek_tv/android_p/platform/hardware/qcom/msm8x84" groups="qcom_msm8x84,pdk-qcom" />
+  <project path="hardware/qcom/neuralnetworks/hvxservice" name="novatek_tv/android_p/platform/hardware/qcom/neuralnetworks/hvxservice" groups="wahoo" />
+  <project path="hardware/qcom/power" name="novatek_tv/android_p/platform/hardware/qcom/power" groups="qcom,pdk-qcom" />
+  <project path="hardware/qcom/wlan" name="novatek_tv/android_p/platform/hardware/qcom/wlan" groups="qcom_wlan,pdk-qcom" />
+  <project path="hardware/ril" name="novatek_tv/android_p/platform/hardware/ril" groups="pdk" />
+  <project path="kernel/configs" name="novatek_tv/android_p/kernel/configs" groups="vts,pdk" />
+  <project path="kernel/tests" name="novatek_tv/android_p/kernel/tests" />
+  <project path="libcore" name="novatek_tv/android_p/platform/libcore" groups="pdk" />
+  <project path="libnativehelper" name="novatek_tv/android_p/platform/libnativehelper" groups="pdk" />
+  <project path="packages/apps/BasicSmsReceiver" name="novatek_tv/android_p/platform/packages/apps/BasicSmsReceiver" groups="pdk-cw-fs,pdk-fs" />
+  <project path="packages/apps/Bluetooth" name="novatek_tv/android_p/platform/packages/apps/Bluetooth" groups="pdk-cw-fs,pdk-fs" />
+  <project path="packages/apps/Browser2" name="novatek_tv/android_p/platform/packages/apps/Browser2" groups="pdk-fs" />
+  <project path="packages/apps/Calendar" name="novatek_tv/android_p/platform/packages/apps/Calendar" groups="pdk-fs" />
+  <project path="packages/apps/Camera2" name="novatek_tv/android_p/platform/packages/apps/Camera2" groups="pdk-fs" />
+  <project path="packages/apps/Car/Dialer" name="novatek_tv/android_p/platform/packages/apps/Car/Dialer" groups="pdk-fs" />
+  <project path="packages/apps/Car/Hvac" name="novatek_tv/android_p/platform/packages/apps/Car/Hvac" groups="pdk-fs" />
+  <project path="packages/apps/Car/LatinIME" name="novatek_tv/android_p/platform/packages/apps/Car/LatinIME" groups="pdk-fs" />
+  <project path="packages/apps/Car/Launcher" name="novatek_tv/android_p/platform/packages/apps/Car/Launcher" groups="pdk-fs" />
+  <project path="packages/apps/Car/LensPicker" name="novatek_tv/android_p/platform/packages/apps/Car/LensPicker" groups="pdk-fs" />
+  <project path="packages/apps/Car/LocalMediaPlayer" name="novatek_tv/android_p/platform/packages/apps/Car/LocalMediaPlayer" groups="pdk-fs" />
+  <project path="packages/apps/Car/Media" name="novatek_tv/android_p/platform/packages/apps/Car/Media" groups="pdk-fs" />
+  <project path="packages/apps/Car/Messenger" name="novatek_tv/android_p/platform/packages/apps/Car/Messenger" groups="pdk-fs" />
+  <project path="packages/apps/Car/Overview" name="novatek_tv/android_p/platform/packages/apps/Car/Overview" groups="pdk-fs" />
+  <project path="packages/apps/Car/Radio" name="novatek_tv/android_p/platform/packages/apps/Car/Radio" groups="pdk-fs" />
+  <project path="packages/apps/Car/Settings" name="novatek_tv/android_p/platform/packages/apps/Car/Settings" groups="pdk-fs" />
+  <project path="packages/apps/Car/Stream" name="novatek_tv/android_p/platform/packages/apps/Car/Stream" groups="pdk-fs" />
+  <project path="packages/apps/Car/SystemUpdater" name="novatek_tv/android_p/platform/packages/apps/Car/SystemUpdater" groups="pdk-fs" />
+  <project path="packages/apps/Car/libs" name="novatek_tv/android_p/platform/packages/apps/Car/libs" groups="pdk-fs" />
+  <project path="packages/apps/CarrierConfig" name="novatek_tv/android_p/platform/packages/apps/CarrierConfig" groups="pdk-cw-fs,pdk-fs" />
+  <project path="packages/apps/CellBroadcastReceiver" name="novatek_tv/android_p/platform/packages/apps/CellBroadcastReceiver" groups="pdk-cw-fs,pdk-fs" />
+  <project path="packages/apps/CertInstaller" name="novatek_tv/android_p/platform/packages/apps/CertInstaller" groups="pdk-cw-fs,pdk-fs" />
+  <project path="packages/apps/Contacts" name="novatek_tv/android_p/platform/packages/apps/Contacts" groups="pdk-fs" />
+  <project path="packages/apps/DeskClock" name="novatek_tv/android_p/platform/packages/apps/DeskClock" groups="pdk-fs" />
+  <project path="packages/apps/DevCamera" name="novatek_tv/android_p/platform/packages/apps/DevCamera" groups="pdk" />
+  <project path="packages/apps/Dialer" name="novatek_tv/android_p/platform/packages/apps/Dialer" groups="pdk-fs" />
+  <project path="packages/apps/DocumentsUI" name="novatek_tv/android_p/platform/packages/apps/DocumentsUI" groups="pdk-cw-fs,pdk-fs" />
+  <project path="packages/apps/Email" name="novatek_tv/android_p/platform/packages/apps/Email" groups="pdk-fs" />
+  <project path="packages/apps/EmergencyInfo" name="novatek_tv/android_p/platform/packages/apps/EmergencyInfo" groups="pdk-fs" />
+  <project path="packages/apps/ExactCalculator" name="novatek_tv/android_p/platform/packages/apps/ExactCalculator" groups="pdk-fs" />
+  <project path="packages/apps/Gallery" name="novatek_tv/android_p/platform/packages/apps/Gallery" groups="pdk-fs" />
+  <project path="packages/apps/Gallery2" name="novatek_tv/android_p/platform/packages/apps/Gallery2" groups="pdk-fs" />
+  <project path="packages/apps/HTMLViewer" name="novatek_tv/android_p/platform/packages/apps/HTMLViewer" groups="pdk-fs" />
+  <project path="packages/apps/KeyChain" name="novatek_tv/android_p/platform/packages/apps/KeyChain" groups="pdk-fs" />
+  <project path="packages/apps/Launcher2" name="novatek_tv/android_p/platform/packages/apps/Launcher2" groups="pdk-fs" />
+  <project path="packages/apps/Launcher3" name="novatek_tv/android_p/platform/packages/apps/Launcher3" groups="pdk-fs" />
+  <project path="packages/apps/LegacyCamera" name="novatek_tv/android_p/platform/packages/apps/LegacyCamera" groups="pdk-fs" />
+  <project path="packages/apps/ManagedProvisioning" name="novatek_tv/android_p/platform/packages/apps/ManagedProvisioning" groups="pdk-fs" />
+  <project path="packages/apps/Messaging" name="novatek_tv/android_p/platform/packages/apps/Messaging" groups="pdk-fs" />
+  <project path="packages/apps/Music" name="novatek_tv/android_p/platform/packages/apps/Music" groups="pdk-fs" />
+  <project path="packages/apps/MusicFX" name="novatek_tv/android_p/platform/packages/apps/MusicFX" groups="pdk-fs" />
+  <project path="packages/apps/Nfc" name="novatek_tv/android_p/platform/packages/apps/Nfc" groups="apps_nfc,pdk-fs" />
+  <project path="packages/apps/OneTimeInitializer" name="novatek_tv/android_p/platform/packages/apps/OneTimeInitializer" groups="pdk-fs" />
+  <project path="packages/apps/PackageInstaller" name="novatek_tv/android_p/platform/packages/apps/PackageInstaller" groups="pdk-cw-fs,pdk-fs" />
+  <project path="packages/apps/PhoneCommon" name="novatek_tv/android_p/platform/packages/apps/PhoneCommon" groups="pdk-cw-fs,pdk-fs" />
+  <project path="packages/apps/Protips" name="novatek_tv/android_p/platform/packages/apps/Protips" groups="pdk-fs" />
+  <project path="packages/apps/Provision" name="novatek_tv/android_p/platform/packages/apps/Provision" groups="pdk-fs" />
+  <project path="packages/apps/QuickSearchBox" name="novatek_tv/android_p/platform/packages/apps/QuickSearchBox" groups="pdk-fs" />
+  <project path="packages/apps/SafetyRegulatoryInfo" name="novatek_tv/android_p/platform/packages/apps/SafetyRegulatoryInfo" groups="pdk-fs" />
+  <project path="packages/apps/SecureElement" name="novatek_tv/android_p/platform/packages/apps/SecureElement" groups="apps_se,pdk-fs" />
+  <project path="packages/apps/Settings" name="novatek_tv/android_p/platform/packages/apps/Settings" groups="pdk-fs" />
+  <project path="packages/apps/SettingsIntelligence" name="novatek_tv/android_p/platform/packages/apps/SettingsIntelligence" groups="pdk-fs" />
+  <project path="packages/apps/SoundRecorder" name="novatek_tv/android_p/platform/packages/apps/SoundRecorder" groups="pdk-fs" />
+  <project path="packages/apps/SpareParts" name="novatek_tv/android_p/platform/packages/apps/SpareParts" groups="pdk-fs" />
+  <project path="packages/apps/Stk" name="novatek_tv/android_p/platform/packages/apps/Stk" groups="apps_stk,pdk-fs" />
+  <project path="packages/apps/StorageManager" name="novatek_tv/android_p/platform/packages/apps/StorageManager" groups="pdk-fs" />
+  <project path="packages/apps/Tag" name="novatek_tv/android_p/platform/packages/apps/Tag" groups="pdk-fs" />
+  <project path="packages/apps/Terminal" name="novatek_tv/android_p/platform/packages/apps/Terminal" groups="pdk-fs" />
+  <project path="packages/apps/Test/connectivity" name="novatek_tv/android_p/platform/packages/apps/Test/connectivity" groups="pdk" />
+  <project path="packages/apps/TimeZoneData" name="novatek_tv/android_p/platform/packages/apps/TimeZoneData" groups="pdk" />
+  <project path="packages/apps/TimeZoneUpdater" name="novatek_tv/android_p/platform/packages/apps/TimeZoneUpdater" groups="pdk" />
+  <project path="packages/apps/Traceur" name="novatek_tv/android_p/platform/packages/apps/Traceur" groups="pdk-fs" />
+  <project path="packages/apps/TvSettings" name="novatek_tv/android_p/platform/packages/apps/TvSettings" groups="pdk-fs" />
+  <project path="packages/apps/TV" name="novatek_tv/android_p/platform/packages/apps/TV" />
+  <project path="packages/apps/UnifiedEmail" name="novatek_tv/android_p/platform/packages/apps/UnifiedEmail" groups="pdk-fs" />
+  <project path="packages/apps/WallpaperPicker" name="novatek_tv/android_p/platform/packages/apps/WallpaperPicker" groups="pdk-fs" />
+  <project path="packages/experimental" name="novatek_tv/android_p/platform/packages/experimental" />
+  <project path="packages/inputmethods/LatinIME" name="novatek_tv/android_p/platform/packages/inputmethods/LatinIME" groups="pdk-fs" />
+  <project path="packages/inputmethods/OpenWnn" name="novatek_tv/android_p/platform/packages/inputmethods/OpenWnn" groups="pdk-fs" />
+  <project path="packages/providers/ApplicationsProvider" name="novatek_tv/android_p/platform/packages/providers/ApplicationsProvider" groups="pdk-fs" />
+  <project path="packages/providers/BlockedNumberProvider" name="novatek_tv/android_p/platform/packages/providers/BlockedNumberProvider" groups="pdk-fs" />
+  <project path="packages/providers/BookmarkProvider" name="novatek_tv/android_p/platform/packages/providers/BookmarkProvider" groups="pdk-fs" />
+  <project path="packages/providers/CalendarProvider" name="novatek_tv/android_p/platform/packages/providers/CalendarProvider" groups="pdk-cw-fs,pdk-fs" />
+  <project path="packages/providers/CallLogProvider" name="novatek_tv/android_p/platform/packages/providers/CallLogProvider" groups="pdk-fs" />
+  <project path="packages/providers/ContactsProvider" name="novatek_tv/android_p/platform/packages/providers/ContactsProvider" groups="pdk-cw-fs,pdk-fs" />
+  <project path="packages/providers/DownloadProvider" name="novatek_tv/android_p/platform/packages/providers/DownloadProvider" groups="pdk-cw-fs,pdk-fs" />
+  <project path="packages/providers/MediaProvider" name="novatek_tv/android_p/platform/packages/providers/MediaProvider" groups="pdk-cw-fs,pdk-fs" />
+  <project path="packages/providers/PartnerBookmarksProvider" name="novatek_tv/android_p/platform/packages/providers/PartnerBookmarksProvider" groups="pdk-fs" />
+  <project path="packages/providers/TelephonyProvider" name="novatek_tv/android_p/platform/packages/providers/TelephonyProvider" groups="pdk-cw-fs,pdk-fs" />
+  <project path="packages/providers/TvProvider" name="novatek_tv/android_p/platform/packages/providers/TvProvider" groups="pdk-fs" />
+  <project path="packages/providers/UserDictionaryProvider" name="novatek_tv/android_p/platform/packages/providers/UserDictionaryProvider" groups="pdk-cw-fs,pdk-fs" />
+  <project path="packages/screensavers/Basic" name="novatek_tv/android_p/platform/packages/screensavers/Basic" groups="pdk-fs" />
+  <project path="packages/screensavers/PhotoTable" name="novatek_tv/android_p/platform/packages/screensavers/PhotoTable" groups="pdk-fs" />
+  <project path="packages/screensavers/WebView" name="novatek_tv/android_p/platform/packages/screensavers/WebView" groups="pdk-fs" />
+  <project path="packages/services/BuiltInPrintService" name="novatek_tv/android_p/platform/packages/services/BuiltInPrintService" groups="pdk-cw-fs,pdk-fs" />
+  <project path="packages/services/Car" name="novatek_tv/android_p/platform/packages/services/Car" groups="pdk-cw-fs,pdk-fs" />
+  <project path="packages/services/Mms" name="novatek_tv/android_p/platform/packages/services/Mms" groups="pdk-cw-fs,pdk-fs" />
+  <project path="packages/services/NetworkRecommendation" name="novatek_tv/android_p/platform/packages/services/NetworkRecommendation" groups="pdk-fs" />
+  <project path="packages/services/Telecomm" name="novatek_tv/android_p/platform/packages/services/Telecomm" groups="pdk-cw-fs,pdk-fs" />
+  <project path="packages/services/Telephony" name="novatek_tv/android_p/platform/packages/services/Telephony" groups="pdk-cw-fs,pdk-fs" />
+  <project path="packages/wallpapers/LivePicker" name="novatek_tv/android_p/platform/packages/wallpapers/LivePicker" groups="pdk-fs" />
+  <project path="pdk" name="novatek_tv/android_p/platform/pdk" groups="pdk" />
+  <project path="platform_testing" name="novatek_tv/android_p/platform/platform_testing" groups="pdk-fs,pdk-cw-fs,cts" />
+  <project path="prebuilts/abi-dumps/ndk" name="novatek_tv/android_p/platform/prebuilts/abi-dumps/ndk" groups="pdk-fs" clone-depth="1" />
+  <project path="prebuilts/abi-dumps/vndk" name="novatek_tv/android_p/platform/prebuilts/abi-dumps/vndk" groups="pdk-fs" clone-depth="1" />
+  <project path="prebuilts/android-emulator" name="novatek_tv/android_p/platform/prebuilts/android-emulator" groups="pdk-fs" clone-depth="1" />
+  <project path="prebuilts/build-tools" name="novatek_tv/android_p/platform/prebuilts/build-tools" groups="pdk" clone-depth="1" />
+  <project path="prebuilts/checkcolor" name="novatek_tv/android_p/platform/prebuilts/checkcolor" groups="pdk" clone-depth="1" />
+  <project path="prebuilts/checkstyle" name="novatek_tv/android_p/platform/prebuilts/checkstyle" groups="pdk" clone-depth="1" />
+  <project path="prebuilts/clang-tools" name="novatek_tv/android_p/platform/prebuilts/clang-tools" groups="pdk" clone-depth="1" />
+  <project path="prebuilts/clang/host/darwin-x86" name="novatek_tv/android_p/platform/prebuilts/clang/host/darwin-x86" groups="pdk,darwin" clone-depth="1" />
+  <project path="prebuilts/clang/host/linux-x86" name="novatek_tv/android_p/platform/prebuilts/clang/host/linux-x86" groups="pdk" clone-depth="1" />
+  <project path="prebuilts/deqp" name="novatek_tv/android_p/platform/prebuilts/deqp" groups="pdk-fs" clone-depth="1" />
+  <project path="prebuilts/devtools" name="novatek_tv/android_p/platform/prebuilts/devtools" groups="pdk-fs" clone-depth="1" />
+  <project path="prebuilts/gcc/darwin-x86/aarch64/aarch64-linux-android-4.9" name="novatek_tv/android_p/platform/prebuilts/gcc/darwin-x86/aarch64/aarch64-linux-android-4.9" groups="pdk,darwin,arm" clone-depth="1" />
+  <project path="prebuilts/gcc/darwin-x86/arm/arm-linux-androideabi-4.9" name="novatek_tv/android_p/platform/prebuilts/gcc/darwin-x86/arm/arm-linux-androideabi-4.9" groups="pdk,darwin,arm" clone-depth="1" />
+  <project path="prebuilts/gcc/darwin-x86/host/i686-apple-darwin-4.2.1" name="novatek_tv/android_p/platform/prebuilts/gcc/darwin-x86/host/i686-apple-darwin-4.2.1" groups="pdk,darwin" clone-depth="1" />
+  <project path="prebuilts/gcc/darwin-x86/mips/mips64el-linux-android-4.9" name="novatek_tv/android_p/platform/prebuilts/gcc/darwin-x86/mips/mips64el-linux-android-4.9" groups="pdk,darwin,mips" clone-depth="1" />
+  <project path="prebuilts/gcc/darwin-x86/x86/x86_64-linux-android-4.9" name="novatek_tv/android_p/platform/prebuilts/gcc/darwin-x86/x86/x86_64-linux-android-4.9" groups="pdk,darwin,x86" clone-depth="1" />
+  <project path="prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9" name="novatek_tv/android_p/platform/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9" groups="pdk,linux,arm" clone-depth="1" />
+  <project path="prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9" name="novatek_tv/android_p/platform/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9" groups="pdk,linux,arm" clone-depth="1" />
+  <project path="prebuilts/gcc/linux-x86/host/x86_64-linux-glibc2.15-4.8" name="novatek_tv/android_p/platform/prebuilts/gcc/linux-x86/host/x86_64-linux-glibc2.15-4.8" groups="pdk,linux" clone-depth="1" />
+  <project path="prebuilts/gcc/linux-x86/host/x86_64-w64-mingw32-4.8" name="novatek_tv/android_p/platform/prebuilts/gcc/linux-x86/host/x86_64-w64-mingw32-4.8" groups="pdk-fs" clone-depth="1" />
+  <project path="prebuilts/gcc/linux-x86/mips/mips64el-linux-android-4.9" name="novatek_tv/android_p/platform/prebuilts/gcc/linux-x86/mips/mips64el-linux-android-4.9" groups="pdk,linux,mips" clone-depth="1" />
+  <project path="prebuilts/gcc/linux-x86/x86/x86_64-linux-android-4.9" name="novatek_tv/android_p/platform/prebuilts/gcc/linux-x86/x86/x86_64-linux-android-4.9" groups="pdk,linux,x86" clone-depth="1" />
+  <project path="prebuilts/gdb/darwin-x86" name="novatek_tv/android_p/platform/prebuilts/gdb/darwin-x86" groups="darwin" clone-depth="1" />
+  <project path="prebuilts/gdb/linux-x86" name="novatek_tv/android_p/platform/prebuilts/gdb/linux-x86" groups="linux" clone-depth="1" />
+  <project path="prebuilts/go/darwin-x86" name="novatek_tv/android_p/platform/prebuilts/go/darwin-x86" groups="darwin,pdk,tradefed" clone-depth="1" />
+  <project path="prebuilts/go/linux-x86" name="novatek_tv/android_p/platform/prebuilts/go/linux-x86" groups="linux,pdk,tradefed" clone-depth="1" />
+  <project path="prebuilts/gradle-plugin" name="novatek_tv/android_p/platform/prebuilts/gradle-plugin" groups="pdk,pdk-cw-fs,pdk-fs" clone-depth="1" />
+  <project path="prebuilts/jdk/jdk8" name="novatek_tv/android_p/platform/prebuilts/jdk/jdk8" groups="pdk" clone-depth="1" />
+  <project path="prebuilts/jdk/jdk9" name="novatek_tv/android_p/platform/prebuilts/jdk/jdk9" groups="pdk" clone-depth="1" />
+  <project path="prebuilts/libs/libedit" name="novatek_tv/android_p/platform/prebuilts/libs/libedit" groups="pdk-cw-fs,pdk-fs" clone-depth="1" />
+  <project path="prebuilts/maven_repo/android" name="novatek_tv/android_p/platform/prebuilts/maven_repo/android" groups="pdk-cw-fs,pdk-fs" clone-depth="1" />
+  <project path="prebuilts/maven_repo/bumptech" name="novatek_tv/android_p/platform/prebuilts/maven_repo/bumptech" groups="pdk-cw-fs,pdk-fs" clone-depth="1" />
+  <project path="prebuilts/maven_repo/google-play-service-client-libraries-3p" name="novatek_tv/android_p/platform/prebuilts/maven_repo/google-play-service-client-libraries-3p" clone-depth="1" />
+  <project path="prebuilts/misc" name="novatek_tv/android_p/platform/prebuilts/misc" groups="pdk" clone-depth="1" />
+  <project path="prebuilts/ndk" name="novatek_tv/android_p/platform/prebuilts/ndk" groups="pdk" clone-depth="1" />
+  <project path="prebuilts/ktlint" name="novatek_tv/android_p/platform/prebuilts/ktlint" clone-depth="1" />
+  <project path="prebuilts/python/darwin-x86/2.7.5" name="novatek_tv/android_p/platform/prebuilts/python/darwin-x86/2.7.5" groups="darwin,pdk,pdk-cw-fs,pdk-fs" clone-depth="1" />
+  <project path="prebuilts/python/linux-x86/2.7.5" name="novatek_tv/android_p/platform/prebuilts/python/linux-x86/2.7.5" groups="linux,pdk,pdk-cw-fs,pdk-fs" clone-depth="1" />
+  <project path="prebuilts/qemu-kernel" name="novatek_tv/android_p/platform/prebuilts/qemu-kernel" groups="pdk" clone-depth="1" />
+  <project path="prebuilts/r8" name="novatek_tv/android_p/platform/prebuilts/r8" groups="pdk" clone-depth="1" />
+  <project path="prebuilts/sdk" name="novatek_tv/android_p/platform/prebuilts/sdk" groups="pdk" clone-depth="1" />
+  <project path="prebuilts/tools" name="novatek_tv/android_p/platform/prebuilts/tools" groups="pdk,tools" clone-depth="1" />
+  <project path="prebuilts/vndk/v27" name="novatek_tv/android_p/platform/prebuilts/vndk/v27" groups="pdk" clone-depth="1" />
+  <project path="sdk" name="novatek_tv/android_p/platform/sdk" groups="pdk-cw-fs,pdk-fs" />
+  <project path="system/bt" name="novatek_tv/android_p/platform/system/bt" groups="pdk" />
+  <project path="system/ca-certificates" name="novatek_tv/android_p/platform/system/ca-certificates" groups="pdk" />
+  <project path="system/chre" name="novatek_tv/android_p/platform/system/chre" groups="pdk" />
+  <project path="system/connectivity/wificond" name="novatek_tv/android_p/platform/system/connectivity/wificond" groups="pdk" />
+  <project path="system/connectivity/wifilogd" name="novatek_tv/android_p/platform/system/connectivity/wifilogd" groups="pdk" />
+  <project path="system/core" name="novatek_tv/android_p/platform/system/core" groups="pdk" />
+  <project path="system/extras" name="novatek_tv/android_p/platform/system/extras" groups="pdk" />
+  <project path="system/gatekeeper" name="novatek_tv/android_p/platform/system/gatekeeper" groups="pdk" />
+  <project path="system/hardware/interfaces" name="novatek_tv/android_p/platform/system/hardware/interfaces" groups="pdk" />
+  <project path="system/hwservicemanager" name="novatek_tv/android_p/platform/system/hwservicemanager" groups="pdk" />
+  <project path="system/iot/attestation" name="novatek_tv/android_p/platform/system/iot/attestation" groups="pdk" />
+  <project path="system/keymaster" name="novatek_tv/android_p/platform/system/keymaster" groups="pdk" />
+  <project path="system/libfmq" name="novatek_tv/android_p/platform/system/libfmq" groups="pdk" />
+  <project path="system/libhidl" name="novatek_tv/android_p/platform/system/libhidl" groups="pdk" />
+  <project path="system/libhwbinder" name="novatek_tv/android_p/platform/system/libhwbinder" groups="pdk" />
+  <project path="system/libufdt" name="novatek_tv/android_p/platform/system/libufdt" groups="pdk" />
+  <project path="system/libvintf" name="novatek_tv/android_p/platform/system/libvintf" groups="pdk" />
+  <project path="system/media" name="novatek_tv/android_p/platform/system/media" groups="pdk" />
+  <project path="system/netd" name="novatek_tv/android_p/platform/system/netd" groups="pdk" />
+  <project path="system/nfc" name="novatek_tv/android_p/platform/system/nfc" groups="pdk" />
+  <project path="system/nvram" name="novatek_tv/android_p/platform/system/nvram" groups="pdk" />
+  <project path="system/security" name="novatek_tv/android_p/platform/system/security" groups="pdk" />
+  <project path="system/sepolicy" name="novatek_tv/android_p/platform/system/sepolicy" groups="pdk" />
+  <project path="system/timezone" name="novatek_tv/android_p/platform/system/timezone" groups="pdk" />
+  <project path="system/tools/aidl" name="novatek_tv/android_p/platform/system/tools/aidl" groups="pdk" />
+  <project path="system/tools/hidl" name="novatek_tv/android_p/platform/system/tools/hidl" groups="pdk" />
+  <project path="system/tpm" name="novatek_tv/android_p/platform/system/tpm" />
+  <project path="system/update_engine" name="novatek_tv/android_p/platform/system/update_engine" groups="pdk" />
+  <project path="system/vold" name="novatek_tv/android_p/platform/system/vold" groups="pdk" />
+  <project path="test/framework" name="novatek_tv/android_p/platform/test/framework" groups="vts,pdk" />
+  <project path="test/suite_harness" name="novatek_tv/android_p/platform/test/suite_harness" groups="cts,pdk-cw-fs,pdk-fs" />
+  <project path="test/vti/alert" name="novatek_tv/android_p/platform/test/vti/alert" groups="vts,pdk" />
+  <project path="test/vti/dashboard" name="novatek_tv/android_p/platform/test/vti/dashboard" groups="vts,pdk" />
+  <project path="test/vti/fuzz_test_serving" name="novatek_tv/android_p/platform/test/vti/fuzz_test_serving" groups="vts,pdk" />
+  <project path="test/vti/test_serving" name="novatek_tv/android_p/platform/test/vti/test_serving" groups="vts,pdk" />
+  <project path="test/vts" name="novatek_tv/android_p/platform/test/vts" groups="vts,pdk" />
+  <project path="test/vts-testcase/fuzz" name="novatek_tv/android_p/platform/test/vts-testcase/fuzz" groups="vts,pdk" />
+  <project path="test/vts-testcase/hal" name="novatek_tv/android_p/platform/test/vts-testcase/hal" groups="vts,pdk" />
+  <project path="test/vts-testcase/hal-trace" name="novatek_tv/android_p/platform/test/vts-testcase/hal-trace" groups="vts,pdk" />
+  <project path="test/vts-testcase/kernel" name="novatek_tv/android_p/platform/test/vts-testcase/kernel" groups="vts,pdk" />
+  <project path="test/vts-testcase/nbu" name="novatek_tv/android_p/platform/test/vts-testcase/nbu" groups="vts,pdk" />
+  <project path="test/vts-testcase/performance" name="novatek_tv/android_p/platform/test/vts-testcase/performance" groups="vts,pdk" />
+  <project path="test/vts-testcase/security" name="novatek_tv/android_p/platform/test/vts-testcase/security" groups="vts,pdk" />
+  <project path="test/vts-testcase/vndk" name="novatek_tv/android_p/platform/test/vts-testcase/vndk" groups="vts,pdk" />
+  <project path="toolchain/benchmark" name="novatek_tv/android_p/toolchain/benchmark" />
+  <project path="toolchain/binutils" name="novatek_tv/android_p/toolchain/binutils" groups="pdk" />
+  <project path="toolchain/pgo-profiles" name="novatek_tv/android_p/toolchain/pgo-profiles" groups="pdk" />
+  <project path="tools/acloud" name="novatek_tv/android_p/platform/tools/acloud" groups="tools,vts,pdk,tradefed" />
+  <project path="tools/appbundle" name="novatek_tv/android_p/platform/tools/appbundle" />
+  <project path="tools/adt/idea" name="novatek_tv/android_p/platform/tools/adt/idea" groups="notdefault,tools" />
+  <project path="tools/apksig" name="novatek_tv/android_p/platform/tools/apksig" groups="pdk,tradefed" />
+  <project path="tools/apkzlib" name="novatek_tv/android_p/platform/tools/apkzlib" groups="pdk,tradefed" />
+  <project path="tools/base" name="novatek_tv/android_p/platform/tools/base" groups="notdefault,tools" />
+  <project path="tools/build" name="novatek_tv/android_p/platform/tools/build" groups="notdefault,tools" />
+  <project path="tools/dexter" name="novatek_tv/android_p/platform/tools/dexter" groups="tools,pdk-fs" />
+  <project path="tools/external/fat32lib" name="novatek_tv/android_p/platform/tools/external/fat32lib" groups="tools" />
+  <project path="tools/external/gradle" name="novatek_tv/android_p/platform/tools/external/gradle" groups="tools" clone-depth="1" />
+  <project path="tools/idea" name="novatek_tv/android_p/platform/tools/idea" groups="notdefault,tools" />
+  <project path="tools/loganalysis" name="novatek_tv/android_p/platform/tools/loganalysis" groups="nopresubmit,pdk,tradefed" />
+  <project path="tools/metalava" name="novatek_tv/android_p/platform/tools/metalava" groups="pdk,tools" />
+  <project path="tools/motodev" name="novatek_tv/android_p/platform/tools/motodev" groups="notdefault,motodev" />
+  <project path="tools/repohooks" name="novatek_tv/android_p/platform/tools/repohooks" groups="adt-infra,cts,developers,motodev,pdk,tools,tradefed" />
+  <project path="tools/studio/cloud" name="novatek_tv/android_p/platform/tools/studio/cloud" groups="notdefault,tools" />
+  <project path="tools/swt" name="novatek_tv/android_p/platform/tools/swt" groups="notdefault,tools" />
+  <project path="tools/test/connectivity" name="novatek_tv/android_p/platform/tools/test/connectivity" groups="pdk" />
+  <project path="tools/tradefederation/core" name="novatek_tv/android_p/platform/tools/tradefederation" groups="pdk,tradefed" />
+  <project path="tools/tradefederation/contrib" name="novatek_tv/android_p/platform/tools/tradefederation/contrib" groups="pdk,tradefed" />
+
+  <include name="device_novatek.xml" />
+
+</manifest>

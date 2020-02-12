@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+  <!-- added new project by Novatek -->
+  <remote  name="novatek"
+           fetch="gerrit-mirror:" review="gerrit-mirror.mitvos.com" revision="novatek-9.0.0_r3-xiaomi" />
+
+  <project path="device/novatek" name="novatek_tv/device/device-novatek" groups="device,novatek" remote="novatek" revision="novatek-9.0.0_r3-xiaomi" />
+  <project path="vendor/novatek" name="novatek_tv/device/vendor-novatek" groups="device,novatek" remote="novatek" revision="novatek-9.0.0_r3-xiaomi" />
+  
+  <!--
+  <project path="vendor/novatek/proprietary/audio" name="audio-hal-novatek" groups="device,novatek" remote="novatek" />
+  <project path="vendor/novatek/codec_omx/omx" name="codec_omx" groups="device,novatek" remote="novatek" revision="novatek-8.0.0_r3" />
+  -->
+  
+  <!--
+  <project path="vendor/google" name="vendor-google" groups="device,novatek" remote="novatek" />
+  <project path="vendor/gtvs_zip" name="vendor-google" revision="gtvs_zip_novatek-9.0.0_r3" groups="device,novatek" remote="novatek" />
+  -->
+  
+  <!-- Overwrite project by Novatek -->  
+  <remove-project name="novatek_tv/android_p/platform/build" />
+  <project path="build/make" name="novatek_tv/device/build" groups="pdk,novatek" remote="novatek" >
+    <copyfile src="core/root.mk" dest="Makefile" />
+    <linkfile src="CleanSpec.mk" dest="build/CleanSpec.mk" />
+    <linkfile src="buildspec.mk.default" dest="build/buildspec.mk.default" />
+    <linkfile src="core" dest="build/core" />
+    <linkfile src="envsetup.sh" dest="build/envsetup.sh" />
+    <linkfile src="target" dest="build/target" />
+    <linkfile src="tools" dest="build/tools" />
+  </project>
+  
+	<!--  
+  <remove-project name="platform/libcore" />
+  <project path="libcore" name="libcore" groups="pdk,novatek" remote="novatek" />
+  
+  <remove-project name="platform/bootable/recovery"/>
+  <project path="bootable/recovery" name="bootable-recovery" groups="pdk,novatek" remote="novatek" />
+	-->
+
+
+  
+  <!-- packages apps -->  
+  <!--
+  <remove-project name="platform/packages/apps/Provision" />
+  <project path="packages/apps/Provision" name="packages-apps-provision" groups="pdk,novatek" remote="novatek"/>
+  <remove-project name="platform/packages/inputmethods/LatinIME" />
+  <project path="packages/inputmethods/LatinIME" name="packages-inputmethods-LatinIME" groups="pdk,novatek" remote="novatek"/>
+  <remove-project name="platform/packages/apps/TvSettings" />
+  <project path="packages/apps/TvSettings" name="packages-apps-tvsettings" groups="pdk,novatek" remote="novatek"/>
+  <remove-project name="platform/packages/apps/Calendar" />
+  <project path="packages/apps/Calendar" name="packages-apps-Calendar" groups="pdk,novatek" remote="novatek"/>
+  <remove-project name="platform/packages/apps/DocumentsUI" />
+  <project path="packages/apps/DocumentsUI" name="packages-apps-documentsui" groups="pdk,novatek" remote="novatek"/>  
+  <remove-project name="platform/packages/providers/DownloadProvider" />
+  <project path="packages/providers/DownloadProvider" name="packages-providers-DownloadProvider" groups="pdk,novatek" remote="novatek" />  
+  -->
+  
+  
+  <!-- frameworks -->
+  <remove-project name="novatek_tv/android_p/platform/frameworks/av" />
+  <project path="frameworks/av" name="novatek_tv/device/frameworks-av" groups="pdk,novatek" remote="novatek" />
+  <remove-project name="novatek_tv/android_p/platform/frameworks/base" /> 
+  <project path="frameworks/base" name="novatek_tv/device/frameworks-base" groups="pdk,novatek" remote="novatek" />
+  <remove-project name="novatek_tv/android_p/platform/frameworks/native" />  
+  <project path="frameworks/native" name="novatek_tv/device/frameworks-native" groups="pdk,novatek" remote="novatek" />
+  <!--
+  <remove-project name="platform/frameworks/opt/net/wifi" />  
+  <project path="frameworks/opt/net/wifi" name="frameworks-opt-net-wifi" groups="pdk,novatek" remote="novatek" />
+  -->
+
+  <!-- system -->
+  <remove-project name="novatek_tv/android_p/platform/system/core" />
+  <project path="system/core" name="novatek_tv/device/system-core" groups="pdk,novatek" remote="novatek" />  
+  <remove-project name="novatek_tv/android_p/platform/system/sepolicy" />
+  <project path="system/sepolicy" name="novatek_tv/device/system-sepolicy" groups="pdk,novatek" remote="novatek" />
+	 <!--  
+  <remove-project name="platform/system/vold" />
+  <project path="system/vold" name="system-vold" groups="pdk,novatek" remote="novatek" />
+  <remove-project name="platform/system/bt" />
+  <project path="system/bt" name="system-bt" groups="pdk,novatek" remote="novatek" />
+  <remove-project name="platform/system/netd" />
+  <project path="system/netd" name="system-netd" groups="pdk,novatek" remote="novatek" />
+  <remove-project name="platform/system/update_engine" />
+  <project path="system/update_engine" name="system-update_engine" groups="pdk,novatek" remote="novatek" />  
+  <remove-project name="platform/system/nfc" />
+  <project path="system/nfc" name="system-nfc" groups="pdk,novatek" remote="novatek" />
+	-->
+  <!-- external -->
+<!--  
+  <remove-project name="platform/external/wpa_supplicant_8" />
+  <project path="external/wpa_supplicant_8" name="external-wpa_supplicant" groups="pdk,novatek" remote="novatek" />
+  <remove-project name="platform/external/boringssl" />
+  <project path="external/boringssl" name="external-boringssl" groups="pdk,novatek" remote="novatek" />
+  <remove-project name="platform/external/neven" />
+  <project path="external/neven" name="external-neven" groups="pdk,novatek" remote="novatek" />
+  <remove-project name="platform/external/chromium-libpac" />
+  <project path="external/chromium-libpac" name="external-chromium-libpac" groups="pdk,novatek" remote="novatek" />
+  <remove-project name="platform/external/v8" />
+  <project path="external/v8" name="external-v8" groups="pdk,novatek" remote="novatek" />
+  <remove-project name="platform/external/f2fs-tools" />
+  <project path="external/f2fs-tools" name="external-f2fs-tools" groups="pdk,novatek" remote="novatek" />
+  <remove-project name="platform/external/aac" />
+  <project path="external/aac" name="external-aac" groups="pdk,novatek" remote="novatek" />
+  <remove-project name="platform/external/libmpeg2" />
+  <project path="external/libmpeg2" name="external-libmpeg2" groups="pdk,novatek" remote="novatek" />
+  <remove-project name="platform/external/libxaac" />
+  <project path="external/libxaac" name="external-libxaac" groups="pdk,novatek" remote="novatek" />
+  <remove-project name="platform/external/tremolo" />
+  <project path="external/tremolo" name="external-tremolo" groups="pdk,novatek" remote="novatek" />
+  <remove-project name="platform/external/libvpx" />
+  <project path="external/libvpx" name="external-libvpx" groups="pdk,novatek" remote="novatek" />
+  <remove-project name="platform/external/v4l2_codec2" />
+  <project path="external/v4l2_codec2" name="external-v4l2_codec2" groups="pdk,novatek" remote="novatek" />
+  <remove-project name="platform/external/libhevc" />
+  <project path="external/libhevc" name="external-libhevc" groups="pdk,novatek" remote="novatek" />
+  -->
+
+
+<!--
+  <remote  name="spgsw"
+           fetch="http://git.novatek.com.tw/scm/spgsw/" revision="master" />
+
+  <project path="vendor/arm" name="arm-nn-driver" groups="device,novatek" remote="spgsw" />
+-->
+</manifest>

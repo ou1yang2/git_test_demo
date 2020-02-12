@@ -1,0 +1,4 @@
+# pack-refs with: peeled fully-peeled 
+fd0a9e7e34d8020412ab7fec1d51d3a3a03f7b85 refs/remotes/origin/master
+512dcc4c93ccacd7d05a9ab6756fe0ea6f103527 refs/remotes/origin/mitvos
+4411079792940279f48b89995d3836bdc7ae3494 refs/remotes/origin/novatek-9.0.0_r3-xiaomi
