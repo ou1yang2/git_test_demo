@@ -1,0 +1,31 @@
+
+# Android sync framework sw driver
+/dev/ion                                0666   system     system
+/dev/mali 				0666   system     graphics
+/dev/mali0 				0666   system     graphics
+/dev/rtkbt_dev            0660   bluetooth	net_bt_admin
+/dev/stpbt                0666   bluetooth      bluetooth
+#for video decoder
+/dev/video10 0666 root root
+/dev/video11 0666 root root
+#for video encoder
+/dev/video30 0666 root root
+#for audio decoder
+/dev/snd/comprC2D1 0666 root root
+/dev/snd/comprC2D2 0666 root root
+/dev/snd/comprC2D3 0666 root root
+/dev/snd/comprC2D4 0666 root root
+/dev/snd/comprC2D5 0666 root root
+#for image decoder
+/dev/video40 0666 root root
+#for camera
+/dev/video* 0660 system camera
+/dev/ntkvplt 0666 root system
+#for kdolby
+/dev/kdolby 0660 media media
+
+/dev/ttyUSB10* 0660 radio radio
+/dev/cdc-wdm*  0660 radio radio
+/dev/qcqmi*    0660 radio radio
+/dev/cdc-acm*  0660 radio radio
+/dev/rm500q_ctl   0660 radio radio

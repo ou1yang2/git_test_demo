@@ -1,0 +1,4 @@
+on fs
+  wait /dev/block/platform/fc048300.mmc/by-name/system
+  wait /dev/block/platform/fc048300.mmc/by-name/vendor
+  symlink /dev/block/platform/fc048300.mmc /dev/block/bootdevice

@@ -1,0 +1,73 @@
+on init
+
+    # Android creates by-name disk links with the disk controller
+    # in the generated path, so that the names pulled out of the GPT
+    # can be associated with the correct disk. Create a shortcut to
+    # /dev/block/by-name so that we can use the same fstabs everywhere.
+    symlink /dev/block/platform/fc048300.mmc/by-name /dev/block/by-name
+    symlink /dev/block/platform/fc048300.mmc/by-name/ker0 /dev/block/by-name/boot
+    symlink /dev/block/platform/fc048300.mmc/by-name/ker1 /dev/block/by-name/recovery
+    symlink /dev/block/by-name/boot /dev/block/platform/fc048300.mmc/by-name/ker0
+    symlink /dev/block/by-name/recovery /dev/block/platform/fc048300.mmc/by-name/ker1
+    mkdir /storage/sdcard0
+    mkdir /udisk
+    #mount vfat /dev/block/sda1 /udsk
+
+service watchdogd /sbin/nvt_recovery_rc_wdt
+    disabled
+    oneshot
+    seclabel u:r:recovery:s0
+
+service nvt_recovery_set_video_win_size /sbin/nvt_recovery_set_video_win_size
+    disabled
+    oneshot
+    seclabel u:r:recovery:s0
+
+service nvt_recovery_set_frc /sbin/nvt_recovery_set_frc
+    disabled
+    oneshot
+    seclabel u:r:recovery:s0
+
+# Reset the watchdog counter once boot is completed
+on property:init.svc.recovery=running
+    write /sys/devices/virtual/misc/watchdog/counter "0"
+
+on boot
+    # MTK Bluetooth
+    insmod /bt/btmtk_usb.ko
+    # ~MTK Bluetooth
+
+on fs
+    insmod /lib/modules/standalone_osd.ko gau32BufAddrSize=0x6EB00000,0x02800000 gau32PlaneWinSize=1280,720,1920,1080,1280,720,256,256,256,256 gau32PlaneOrder=4,0 gau32NumOfBuffer=2,3,2,2,2 gu32FastLogoPlaneID=2
+    insmod /lib/modules/phy-nvt-u2.ko
+    insmod /lib/modules/phy-nvt-u3.ko
+    insmod /lib/modules/ehci-hcd.ko
+    insmod /lib/modules/xhci-hcd.ko
+    insmod /lib/modules/xhci-nvt.ko
+    insmod /lib/modules/usb-storage.ko
+    insmod /lib/modules/usbhid.ko
+    start watchdogd
+    start nvt_recovery_set_video_win_size
+    start nvt_recovery_set_frc
+
+    #set GPA5(BKLTPWR) output high
+    echo 5 > /sys/class/gpio/export
+    echo out > /sys/class/gpio/gpio5/direction
+    echo 1 > /sys/class/gpio/gpio5/value
+    echo 5 > /sys/class/gpio/unexport
+
+    #set GPE11(TCON_12V_PWR_EN) output high
+    echo 119 > /sys/class/gpio/export
+    echo out > /sys/class/gpio/gpio119/direction
+    echo 1 > /sys/class/gpio/gpio119/value
+    echo 119 > /sys/class/gpio/unexport
+
+on fs
+    start console
+
+service console /sbin/busybox ash
+    disabled
+    class core
+    console
+    seclabel u:r:shell:s0
+

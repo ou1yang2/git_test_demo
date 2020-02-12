@@ -1,0 +1,64 @@
+#
+# Copyright 2017 The Android Open Source Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+on fs
+    mkdir /opera 0775 system system
+
+    mkdir /tmp
+    mount tmpfs tmpfs /tmp mode=0755,uid=0,gid=1000
+    mkdir /dev/shm
+    symlink /opera/lib /lib
+    symlink /opera/bin /bin
+    symlink /opera/mtd_apexe /mtd_apexe
+    #symlink /opera/mtd_rwarea /mtd_rwarea
+    #export NVT_NLOGGER_HOME /mtd_rwarea/logger/
+    #export NVT_HBBTV_NC_LIB /opera/system-lib/libnpcOperaClient.so
+
+on property:persist.nvt.opera.start=1
+    setprop nvt.opera.start 1
+
+on property:nvt.opera.start=1
+    start nova_opera
+
+service nova_opera /vendor/bin/sh /opera/mtd_apexe/board/com.nvt.opera/nvt_opera_android.sh
+    seclabel u:r:nova_opera:s0
+    user root
+    group root
+    oneshot
+    class late_start
+
+service gen_resolv /vendor/bin/sh /vendor/bin/gen_resolv.sh
+    seclabel u:r:nova_opera:s0
+    class main
+    user root
+    group root
+    oneshot
+    
+service nova_opera_exit /vendor/bin/sh /opera/mtd_apexe/board/com.nvt.opera/exit.sh
+    seclabel u:r:nova_opera:s0
+    class main
+    user root
+    group root
+    oneshot
+    disabled
+    
+
+on property:net.dns1=*
+    write /data/misc/net/resolv.conf "nameserver ${net.dns1}"
+
+on property:sys.shutdown.requested=*
+    write /dev/kmsg "[BOOT] stop opera"
+    start nova_opera_exit
