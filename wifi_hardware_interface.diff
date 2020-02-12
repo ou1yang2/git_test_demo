@@ -1,0 +1,73 @@
+From 3471080675e29cc599ff0017d1b9e861cce79910 Mon Sep 17 00:00:00 2001
+From: niuyue <niuyue@xiaomi.com>
+Date: Mon, 25 Feb 2019 21:23:56 +0800
+Subject: [PATCH] [alita-hugo] add xiaomi wifi build system (3/5)
+
+ALITA-339
+
+add  wifi multihal support
+use uniform interface for varios vender wifihal init
+use a seprated lib for vendor lib detection
+
+Change-Id: If61742540a96cfa2ef9989602d81884963d36d25
+Signed-off-by: niuyue <niuyue@xiaomi.com>
+---
+
+diff --git a/wifi/1.2/default/Android.mk b/wifi/1.2/default/Android.mk
+index 3919690..c3ee503 100644
+--- a/wifi/1.2/default/Android.mk
++++ b/wifi/1.2/default/Android.mk
+@@ -56,6 +56,7 @@
+     libutils \
+     libwifi-hal \
+     libwifi-system-iface \
++    libwifi-multihal \
+     android.hardware.wifi@1.0 \
+     android.hardware.wifi@1.1 \
+     android.hardware.wifi@1.2
+@@ -81,6 +82,7 @@
+     libnl \
+     libutils \
+     libwifi-hal \
++    libwifi-multihal \
+     libwifi-system-iface \
+     android.hardware.wifi@1.0 \
+     android.hardware.wifi@1.1 \
+@@ -117,6 +119,7 @@
+     libnl \
+     libutils \
+     libwifi-hal \
++    libwifi-multihal \
+     libwifi-system-iface \
+     android.hardware.wifi@1.0 \
+     android.hardware.wifi@1.1 \
+diff --git a/wifi/1.2/default/wifi_legacy_hal.cpp b/wifi/1.2/default/wifi_legacy_hal.cpp
+index 375204c..cd7aab6 100644
+--- a/wifi/1.2/default/wifi_legacy_hal.cpp
++++ b/wifi/1.2/default/wifi_legacy_hal.cpp
+@@ -46,6 +46,7 @@
+ }  // namespace
+ 
+ namespace android {
++
+ namespace hardware {
+ namespace wifi {
+ namespace V1_2 {
+@@ -56,6 +57,7 @@
+ // std::function methods to be invoked.
+ //
+ // Callback to be invoked once |stop| is complete
++extern wifi_error init_multiwifi_vendor_hal_func_table(wifi_hal_fn* fn_table);
+ std::function<void(wifi_handle handle)> on_stop_complete_internal_callback;
+ void onAsyncStopComplete(wifi_handle handle) {
+     const auto lock = hidl_sync_util::acquireGlobalLock();
+@@ -345,7 +347,8 @@
+             << "Failed to initialize legacy hal function table with stubs";
+         return WIFI_ERROR_UNKNOWN;
+     }
+-    wifi_error status = init_wifi_vendor_hal_func_table(&global_func_table_);
++
++    wifi_error status = init_multiwifi_vendor_hal_func_table(&global_func_table_);
+     if (status != WIFI_SUCCESS) {
+         LOG(ERROR) << "Failed to initialize legacy hal function table";
+     }

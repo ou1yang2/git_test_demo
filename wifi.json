@@ -1,0 +1,10 @@
+{
+    "product":"kingarthur",
+    "wifi_modules":["mt7668_usb", "qca9377"],
+    "fw_path":"vendor/duokan/hardware/wifi",
+    "cfg_path":"hardware/xiaomi/wifi",
+    "dual_interface":true,
+    "miracast":true,
+    "init_rc":"device/xiaomi/kingarthur/init.novatek.rc",
+    "properties":[]
+}

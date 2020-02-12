@@ -1,0 +1,460 @@
+From 06af57cedf314c9fa60faeba1568319f16117425 Mon Sep 17 00:00:00 2001
+From: niuyue <niuyue@xiaomi.com>
+Date: Sun, 22 Dec 2019 18:14:13 +0800
+Subject: [PATCH] [alita-hugo] use xiaomi wifi build system (2/5)
+
+ALITA-339
+
+libwifihal in framework
+adaption for multiwifi libraries
+
+Change-Id: I05edc6fc4c76e7ad6099362f2d98395290d67090
+Signed-off-by: niuyue <niuyue@xiaomi.com>
+---
+
+diff --git a/libwifi_hal/Android.mk b/libwifi_hal/Android.mk
+index 3e49ddf..10658f8 100644
+--- a/libwifi_hal/Android.mk
++++ b/libwifi_hal/Android.mk
+@@ -60,6 +60,10 @@
+ wifi_hal_cflags += -DWIFI_DRIVER_STATE_OFF=\"$(WIFI_DRIVER_STATE_OFF)\"
+ endif
+ 
++ifeq ($(MULTI_WIFI_SUPPORT), true)
++wifi_hal_cflags += -DMULTI_WIFI_SUPPORT
++endif
++
+ # Common code shared between the HALs.
+ # ============================================================
+ include $(CLEAR_VARS)
+@@ -68,8 +72,12 @@
+ LOCAL_CFLAGS := $(wifi_hal_cflags)
+ LOCAL_C_INCLUDES := $(LOCAL_PATH)/include
+ LOCAL_SHARED_LIBRARIES := libbase
++ifeq ($(MULTI_WIFI_SUPPORT), true)
++LOCAL_SHARED_LIBRARIES += libwifi-multiwifi
++endif
+ LOCAL_HEADER_LIBRARIES := libcutils_headers
+-LOCAL_SRC_FILES := wifi_hal_common.cpp
++LOCAL_SRC_FILES += wifi_hal_common.cpp
++LOCAL_EXPORT_C_INCLUDE_DIRS := $(LOCAL_PATH)/include
+ include $(BUILD_STATIC_LIBRARY)
+ 
+ # A fallback "vendor" HAL library.
+@@ -85,27 +91,43 @@
+ 
+ # Pick a vendor provided HAL implementation library.
+ # ============================================================
+-LIB_WIFI_HAL := libwifi-hal-fallback
+ VENDOR_LOCAL_SHARED_LIBRARIES :=
+-ifeq ($(BOARD_WLAN_DEVICE), bcmdhd)
+-  LIB_WIFI_HAL := libwifi-hal-bcm
+-else ifeq ($(BOARD_WLAN_DEVICE), qcwcn)
+-  LIB_WIFI_HAL := libwifi-hal-qcom
++LIB_WIFI_HAL := libwifi-hal-fallback
++#$(warning SUPPORTED_WLAN_VENDORS: $(BOARD_WIFI_VENDORS))
++$(warning SUPPORTED_WLAN_VENDORS is $(BOARD_WIFI_VENDORS))
++ifneq ($(filter $(BOARD_WIFI_VENDORS), qualcomm),)
++  SHARED_LIB_WIFI_HAL += libwifi-hal-qcom
+   VENDOR_LOCAL_SHARED_LIBRARIES := libcld80211
+-else ifeq ($(BOARD_WLAN_DEVICE), mrvl)
++endif
++ifneq ($(filter $(BOARD_WIFI_VENDORS), realtek),)
++  LIB_WIFI_HAL := libwifi-hal-mt66xx
++endif
++
++ifneq ($(filter $(BOARD_WIFI_VENDORS), mediatek),)
++  LIB_WIFI_HAL := libwifi-hal-mt66xx
++endif
++
++VENDOR_LOCAL_SHARED_LIBRARIES += $(SHARED_LIB_WIFI_HAL)
++# ifeq ($(BOARD_WLAN_DEVICE), bcmdhd)
++#   LIB_WIFI_HAL := libwifi-hal-bcm
++# else ifeq ($(BOARD_WLAN_DEVICE), qcwcn)
++#   LIB_WIFI_HAL := libwifi-hal-qcom
++#   VENDOR_LOCAL_SHARED_LIBRARIES := libcld80211
++# else ifeq ($(BOARD_WLAN_DEVICE), mrvl)
+   # this is commented because none of the nexus devices
+   # that sport Marvell's wifi have support for HAL
+   # LIB_WIFI_HAL := libwifi-hal-mrvl
+-else ifeq ($(BOARD_WLAN_DEVICE), MediaTek)
++# else ifeq ($(BOARD_WLAN_DEVICE), MediaTek)
+   # support MTK WIFI HAL
+-  LIB_WIFI_HAL := libwifi-hal-mt66xx
+-else ifeq ($(BOARD_WLAN_DEVICE), emulator)
+-  LIB_WIFI_HAL := libwifi-hal-emu
+-endif
++#   LIB_WIFI_HAL := libwifi-hal-mt66xx
++# else ifeq ($(MULTI_WIFI_SUPPORT), true)
++#   LIB_WIFI_HAL := libwifi-hal-multi
++# endif
+ 
+ # The WiFi HAL that you should be linking.
+ # ============================================================
+ include $(CLEAR_VARS)
++#USB_WIFI_SUPPORT := true
+ LOCAL_MODULE := libwifi-hal
+ LOCAL_PROPRIETARY_MODULE := true
+ LOCAL_CFLAGS := $(wifi_hal_cflags)
+@@ -121,10 +143,18 @@
+     libnl \
+     libutils \
+     $(VENDOR_LOCAL_SHARED_LIBRARIES)
++ifeq ($(MULTI_WIFI_SUPPORT), true)
++#LOCAL_SHARED_LIBRARIES += libwifi-multiwifi libcld80211
++LOCAL_SHARED_LIBRARIES += libwifi-multiwifi
++#LOCAL_STATIC_LIBRARIES += libwifi-hal-qcom
++#$(warning LOCAL_STATIC_LIBRARIES is $(LOCAL_STATIC_LIBRARIES))
++endif
+ LOCAL_SRC_FILES := \
+     driver_tool.cpp \
+     hal_tool.cpp
++LOCAL_EXPORT_LDLIBS := -lwifi-hal-common
+ LOCAL_WHOLE_STATIC_LIBRARIES := $(LIB_WIFI_HAL) libwifi-hal-common
++$(warning LOCAL_STATIC_LIBRARIES is $(LOCAL_STATIC_LIBRARIES))
+ include $(BUILD_SHARED_LIBRARY)
+ 
+ # Test utilities (e.g. mock classes) for libwifi-hal
+diff --git a/libwifi_hal/wifi_hal_common.cpp b/libwifi_hal/wifi_hal_common.cpp
+index 413daf7..32ced9d 100644
+--- a/libwifi_hal/wifi_hal_common.cpp
++++ b/libwifi_hal/wifi_hal_common.cpp
+@@ -23,10 +23,68 @@
+ #include <android-base/logging.h>
+ #include <cutils/misc.h>
+ #include <cutils/properties.h>
+-#include <sys/syscall.h>
++
++#include <string>
++#include <vector>
+ 
+ extern "C" int init_module(void *, unsigned long, const char *);
+ extern "C" int delete_module(const char *, unsigned int);
++
++#include <sys/syscall.h>
++#define finit_module(fd, opts, flags) syscall(SYS_finit_module, fd, opts, flags)
++
++#ifdef MULTI_WIFI_SUPPORT
++namespace android {
++
++namespace wifi_multiwifi {
++  extern const char* get_wifi_fw_sta(void);
++  extern const char* get_wifi_fw_ap(void);
++  extern const char* get_wifi_fw_p2p(void);
++  extern const char* get_wifi_mod_param(void);
++  extern const char* get_wifi_mod_name(void);
++  extern const char* get_wifi_mod_path(void);
++  extern const char* get_wifi_cfg80211_name(void);
++  extern std::vector<std::string> get_wifi_def_mods(void);
++  extern const char* get_wifi_fw_param_path(void);
++}
++namespace wifi_power {
++  extern void WIFI_POWER_ON(void);
++  extern void WIFI_POWER_OFF(void);
++}
++
++}
++#endif
++
++#ifdef MULTI_WIFI_SUPPORT
++
++
++#ifdef WIFI_DRIVER_FW_PATH_STA
++#undef WIFI_DRIVER_FW_PATH_STA 
++#endif
++#define WIFI_DRIVER_FW_PATH_STA android::wifi_multiwifi::get_wifi_fw_sta()
++
++#ifdef WIFI_DRIVER_FW_PATH_AP
++#undef WIFI_DRIVER_FW_PATH_AP
++#endif
++#define WIFI_DRIVER_FW_PATH_AP android::wifi_multiwifi::get_wifi_fw_sta()
++
++#ifdef WIFI_DRIVER_FW_PATH_P2P
++#undef WIFI_DRIVER_FW_PATH_P2P
++#endif
++#define WIFI_DRIVER_FW_PATH_P2P android::wifi_multiwifi::get_wifi_fw_p2p()
++
++#ifdef WIFI_DRIVER_MODULE_ARG
++#undef WIFI_DRIVER_MODULE_ARG
++#endif
++#define WIFI_DRIVER_MODULE_ARG android::wifi_multiwifi::get_wifi_mod_param()
++
++#ifdef WIFI_DRIVER_FW_PATH_PARAM
++#undef WIFI_DRIVER_FW_PATH_PARAM 
++#endif
++#define WIFI_DRIVER_FW_PATH_PARAM android::wifi_multiwifi::get_wifi_fw_param_path()
++
++#else
++
+ 
+ #ifndef WIFI_DRIVER_FW_PATH_STA
+ #define WIFI_DRIVER_FW_PATH_STA NULL
+@@ -42,43 +100,56 @@
+ #define WIFI_DRIVER_MODULE_ARG ""
+ #endif
+ 
++#endif
++
++static const char* get_modules(void)
++{
++    return "/proc/modules";
++}
+ static const char DRIVER_PROP_NAME[] = "wlan.driver.status";
+ #ifdef WIFI_DRIVER_MODULE_PATH
++#ifdef MULTI_WIFI_SUPPORT
++static const char* DRIVER_MODULE_NAME = android::wifi_multiwifi::get_wifi_mod_name();
++static const char* DRIVER_MODULE_TAG = (std::string(android::wifi_multiwifi::get_wifi_mod_name()) + std::string(" ")).c_str();
++static const char* DRIVER_MODULE_PATH = android::wifi_multiwifi::get_wifi_mod_path();
++static const char* DRIVER_MODULE_ARG = android::wifi_multiwifi::get_wifi_mod_param();
++#else
+ static const char DRIVER_MODULE_NAME[] = WIFI_DRIVER_MODULE_NAME;
+ static const char DRIVER_MODULE_TAG[] = WIFI_DRIVER_MODULE_NAME " ";
+ static const char DRIVER_MODULE_PATH[] = WIFI_DRIVER_MODULE_PATH;
+ static const char DRIVER_MODULE_ARG[] = WIFI_DRIVER_MODULE_ARG;
++#endif
+ static const char MODULE_FILE[] = "/proc/modules";
++
+ #endif
+ 
+-static int insmod(const char *filename, const char *args) {
++static int _insmod(const char *filename, const char *args) {
+   int ret;
+-  int fd;
+ 
+-  fd = TEMP_FAILURE_RETRY(open(filename, O_RDONLY | O_CLOEXEC | O_NOFOLLOW));
+-  if (fd < 0) {
+-    PLOG(ERROR) << "Failed to open " << filename;
+-    return -1;
+-  }
++  int fd = open(filename, O_RDONLY);
++  if (fd == -1) return -1;
+ 
+-  ret = syscall(__NR_finit_module, fd, args, 0);
++  ret = finit_module(fd, args, 0);
++  if (ret < 0)
++    LOG(ERROR)<<"errno: "<<errno <<" " << strerror(errno);
+ 
+   close(fd);
+-  if (ret < 0) {
+-    PLOG(ERROR) << "finit_module return: " << ret;
+-  }
+ 
+   return ret;
+ }
+ 
+-static int rmmod(const char *modname) {
++static int _rmmod(const char *modname) {
+   int ret = -1;
+   int maxtry = 10;
+ 
+   while (maxtry-- > 0) {
+     ret = delete_module(modname, O_NONBLOCK | O_EXCL);
+-    if (ret < 0 && errno == EAGAIN)
++    if (ret < 0) {
++      LOG(ERROR)<<"remove module and return: "<< ret << strerror(errno);
++    }
++    if (ret < 0 && errno == EAGAIN) {
+       usleep(500000);
++    }
+     else
+       break;
+   }
+@@ -88,6 +159,65 @@
+   return ret;
+ }
+ 
++#ifdef MULTI_WIFI_SUPPORT
++std::vector<std::string> installed_modules;
++std::vector<std::string>::reverse_iterator riter;
++const bool use_cfg80211_mod = false;
++static void remove_installed_modules(void) {
++    for (riter=installed_modules.rbegin();riter!=installed_modules.rend();riter++)
++    {
++        _rmmod(riter->c_str());
++    }
++    installed_modules.clear();
++
++}
++static int insmod(const char *filename, const char *args) {
++    int ret = 0;
++    for(auto def_mod : android::wifi_multiwifi::get_wifi_def_mods()){
++       std::string mod_file = std::string(android::wifi_multiwifi::get_wifi_mod_path()) + def_mod + std::string(".ko");
++       ret = _insmod(mod_file.c_str(), NULL);
++       if (ret < 0){
++           remove_installed_modules();
++           return ret;
++       }
++       installed_modules.push_back(def_mod);
++    }
++    // insmod cfg80211
++    if (use_cfg80211_mod) {
++        ret = _insmod(android::wifi_multiwifi::get_wifi_cfg80211_name(), NULL);
++        if (ret < 0) {
++            remove_installed_modules();
++            return ret;
++        }
++        installed_modules.push_back(std::string(android::wifi_multiwifi::get_wifi_cfg80211_name()));
++    }
++
++    //insmod driver
++    ret = _insmod(filename, args);
++    if (ret) {
++        LOG(ERROR) << "Failed to insmod driver and ret " << ret << std::endl;
++        remove_installed_modules();
++        return ret;
++    }
++    return 0;
++}
++
++static int rmmod(const char *modname) {
++    int ret = 0;
++    ret = _rmmod(modname);
++    if (ret) return ret;
++    remove_installed_modules();
++    return ret;
++}
++#else
++static int insmod(const char *filename, const char *args) {
++    return _insmod(filename, args);
++}
++
++static int rmmod(const char *modname) {
++    return _rmmod(modname);
++}
++#endif
+ #ifdef WIFI_DRIVER_STATE_CTRL_PARAM
+ int wifi_change_driver_state(const char *state) {
+   int len;
+@@ -114,9 +244,9 @@
+   char driver_status[PROPERTY_VALUE_MAX];
+ #ifdef WIFI_DRIVER_MODULE_PATH
+   FILE *proc;
+-  char line[sizeof(DRIVER_MODULE_TAG) + 10];
++  char* line = NULL;
++  size_t max_size = 256;
+ #endif
+-
+   if (!property_get(DRIVER_PROP_NAME, driver_status, NULL) ||
+       strcmp(driver_status, "ok") != 0) {
+     return 0; /* driver not loaded */
+@@ -133,13 +263,20 @@
+     property_set(DRIVER_PROP_NAME, "unloaded");
+     return 0;
+   }
+-  while ((fgets(line, sizeof(line), proc)) != NULL) {
+-    if (strncmp(line, DRIVER_MODULE_TAG, strlen(DRIVER_MODULE_TAG)) == 0) {
++  while ((::getline(&line, &max_size, proc)) != -1) {
++    char *running_modname = std::strtok(line, " ");
++    if (strncmp(running_modname, DRIVER_MODULE_NAME, strlen(DRIVER_MODULE_NAME)) == 0) {
++      LOG(INFO) << "wifi driver module " << running_modname << " found!";
++      if(line) {
++          free(line);
++      }
++      property_set(DRIVER_PROP_NAME, "ok");
+       fclose(proc);
+       return 1;
+     }
+   }
+   fclose(proc);
++  LOG(ERROR) << "driver not found " <<  std::endl;
+   property_set(DRIVER_PROP_NAME, "unloaded");
+   return 0;
+ #else
+@@ -148,12 +285,31 @@
+ }
+ 
+ int wifi_load_driver() {
++  LOG(INFO) << "LOAD WIFI DRIVER AND SET POWER ON";
++  android::wifi_power::WIFI_POWER_ON();
+ #ifdef WIFI_DRIVER_MODULE_PATH
+   if (is_wifi_driver_loaded()) {
+     return 0;
+   }
+ 
+-  if (insmod(DRIVER_MODULE_PATH, DRIVER_MODULE_ARG) < 0) return -1;
++  if (DRIVER_MODULE_PATH == NULL || DRIVER_MODULE_NAME == NULL) {
++    char property_fact[256] = {0};
++    LOG(ERROR) << "DRIVER_MODULE_PATH or DRIVER_MODULE_NAME maybe NULL, return";
++    android::wifi_power::WIFI_POWER_OFF();
++    if (property_get("ro.product.factorymode", property_fact, NULL) && strcmp(property_fact, "1")) {
++      return -1;
++    } else {
++      return 0;
++    }
++  }
++
++  if (insmod(DRIVER_MODULE_PATH, DRIVER_MODULE_ARG) < 0) {
++    LOG(ERROR) << "Faild to insmod wifi driver module";
++    LOG(ERROR) << DRIVER_MODULE_PATH << DRIVER_MODULE_ARG <<std::endl;
++    android::wifi_power::WIFI_POWER_OFF();
++    return 0;
++  }
++  property_set("wlan.wifi_chip", DRIVER_MODULE_NAME);
+ #endif
+ 
+ #ifdef WIFI_DRIVER_STATE_CTRL_PARAM
+@@ -161,14 +317,31 @@
+     return 0;
+   }
+ 
+-  if (wifi_change_driver_state(WIFI_DRIVER_STATE_ON) < 0) return -1;
++  if (wifi_change_driver_state(WIFI_DRIVER_STATE_ON) < 0) {
++    android::wifi_power::WIFI_POWER_OFF();
++    return -1;
++  }
+ #endif
+   property_set(DRIVER_PROP_NAME, "ok");
+   return 0;
+ }
+ 
+ int wifi_unload_driver() {
++
++  LOG(INFO) << "UNLOAD WIFI DRIVER AND SET POWER OFF";
++  if (DRIVER_MODULE_PATH == NULL || DRIVER_MODULE_NAME == NULL) {
++    char property_fact[256];
++    LOG(ERROR) << "DRIVER_MODULE_PATH or DRIVER_MODULE_NAME maybe NULL, return";
++    android::wifi_power::WIFI_POWER_OFF();
++    if (property_get("ro.product.factorymode", property_fact, NULL) && (strcmp(property_fact, "1") == 0)) {
++      return -1;
++    } else {
++      return 0;
++    }
++  }
++
+   if (!is_wifi_driver_loaded()) {
++    LOG(ERROR) << "driver already removed, quit!";
+     return 0;
+   }
+   usleep(200000); /* allow to finish interface down */
+@@ -176,6 +349,7 @@
+   if (rmmod(DRIVER_MODULE_NAME) == 0) {
+     int count = 20; /* wait at most 10 seconds for completion */
+     while (count-- > 0) {
++      LOG(INFO) << "left "<< count << " times to check driver: ";
+       if (!is_wifi_driver_loaded()) break;
+       usleep(500000);
+     }
+@@ -183,9 +357,12 @@
+     if (count) {
+       return 0;
+     }
+-    return -1;
+-  } else
+-    return -1;
++    LOG(ERROR) << "wait driver unload timeout.";
++    return 0;
++  } else {
++    LOG(ERROR) << "unload module failed.";
++    return 0;
++  }
+ #else
+ #ifdef WIFI_DRIVER_STATE_CTRL_PARAM
+   if (is_wifi_driver_loaded()) {
+@@ -193,6 +370,7 @@
+   }
+ #endif
+   property_set(DRIVER_PROP_NAME, "unloaded");
++  android::wifi_power::WIFI_POWER_OFF();
+   return 0;
+ #endif
+ }
