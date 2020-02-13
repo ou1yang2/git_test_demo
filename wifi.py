@@ -196,7 +196,7 @@ def patch_repositories():
     return
 
 def welcome():
-    print("welcome to wifi bringup tools")
+    print("welcome to wifi bringup tools!")
     return
 
 def prepare():
