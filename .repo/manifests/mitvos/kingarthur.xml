@@ -753,4 +753,13 @@
     <project name="/mitv_bsp/duokan/hardware/wifi/mtk/hal" path="vendor/duokan/hardware/wifimtk/wifi_hal" revision="master" />
     <project name="/mitv_bsp/duokan/hardware/wifi/mtk/configs" path="vendor/duokan/hardware/wifimtk/configs" revision="master" />
     <!--Xiaomi wifi end-->
+<!--Xiaomi wifi begin:-->
+    <project name="/mitv_bsp/hardware/xiaomi/wifi/" path="/hardware/xiaomi/wifi/" revision="master" />
+    <project name="/mitv_bsp/duokan/hardware/wifi/mtkdrivers/mt7668_usb" path="vendor/duokan/hardware/wifimtkdrivers/mt7668_usb" revision="jobs" />
+    <project name="/mitv_bsp/duokan/hardware/wifi/qcomdrivers/qca9377" path="vendor/duokan/hardware/wifiqcomdrivers/qca9377" revision="magnolia_p" />
+    <project name="/mitv_bsp/duokan/hardware/wifi/qcom/hal" path="vendor/duokan/hardware/wifiqcom/wifi_hal" revision="master" />
+    <project name="/mitv_bsp/duokan/hardware/wifi/qcom/configs" path="vendor/duokan/hardware/wifiqcom/configs" revision="master" />
+    <project name="/mitv_bsp/duokan/hardware/wifi/mtk/hal" path="vendor/duokan/hardware/wifimtk/wifi_hal" revision="master" />
+    <project name="/mitv_bsp/duokan/hardware/wifi/mtk/configs" path="vendor/duokan/hardware/wifimtk/configs" revision="master" />
+    <!--Xiaomi wifi end-->
 </manifest>
