@@ -169,3 +169,5 @@ DEVICE_SPECIAL_MITV_CONFIG_XML := true
 
 # wifi makefile
 include device/xiaomi/kingarthur/wifi.mk
+# wifi makefile
+include device/xiaomi/kingarthur/wifi.mk
